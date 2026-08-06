@@ -1,0 +1,98 @@
+{
+  "anchor": "SAGE_lorentz",
+  "anchor_note": "SAGE/Lorentz trained IN-GRID under the same protocol as every other cell (fixed c=1.0, 300 epochs, no early stopping, no dropout). It is NOT the main HVGAE embedding, which used curvature search and early stopping -- mixing those protocols would confound encoder/geometry effects with training differences.",
+  "flat": {
+    "SAGE_lorentz": {
+      "rho_vs_anchor": 1.0,
+      "p": 0.0,
+      "seconds": 604.0112955570221
+    },
+    "SAGE_poincare": {
+      "rho_vs_anchor": 0.97986115767026,
+      "p": 0.0,
+      "seconds": 395.0630645751953
+    },
+    "SAGE_euclidean": {
+      "rho_vs_anchor": 0.9103419883017868,
+      "p": 0.0,
+      "seconds": 344.6394667625427
+    },
+    "GCN_lorentz": {
+      "rho_vs_anchor": 0.7593001745256135,
+      "p": 0.0,
+      "seconds": 296.69956970214844
+    },
+    "GCN_poincare": {
+      "rho_vs_anchor": 0.7804714665783677,
+      "p": 0.0,
+      "seconds": 252.05531287193298
+    },
+    "GCN_euclidean": {
+      "rho_vs_anchor": 0.6781680029049347,
+      "p": 0.0,
+      "seconds": 213.0945644378662
+    },
+    "GAT_lorentz": {
+      "rho_vs_anchor": 0.9480898204171571,
+      "p": 0.0,
+      "seconds": 192.0366494655609
+    },
+    "GAT_poincare": {
+      "rho_vs_anchor": 0.9587320327789209,
+      "p": 0.0,
+      "seconds": 184.65809869766235
+    },
+    "GAT_euclidean": {
+      "rho_vs_anchor": 0.883291824468127,
+      "p": 0.0,
+      "seconds": 177.5039210319519
+    },
+    "random": {
+      "rho_vs_anchor": -0.007079718136699492,
+      "p": 0.7126852966534525,
+      "seconds": 0.0
+    }
+  },
+  "grid": {
+    "SAGE": {
+      "lorentz": 1.0,
+      "poincare": 0.97986115767026,
+      "euclidean": 0.9103419883017868
+    },
+    "GCN": {
+      "lorentz": 0.7593001745256135,
+      "poincare": 0.7804714665783677,
+      "euclidean": 0.6781680029049347
+    },
+    "GAT": {
+      "lorentz": 0.9480898204171571,
+      "poincare": 0.9587320327789209,
+      "euclidean": 0.883291824468127
+    }
+  },
+  "random_null_rho": -0.007079718136699492,
+  "encoders": [
+    "SAGE",
+    "GCN",
+    "GAT"
+  ],
+  "manifolds": [
+    "lorentz",
+    "poincare",
+    "euclidean"
+  ],
+  "fixed_params": {
+    "K": 36,
+    "eps": 0.02,
+    "delta": 1.0,
+    "epochs": 300,
+    "hidden_dim": 64,
+    "embed_dim": 16,
+    "curvature": 1.0,
+    "lr": 0.001,
+    "gat_heads": 1,
+    "n_repeats": 3,
+    "simulator_seed": 0
+  },
+  "total_seconds": 2833.733334541321
+}

@@ -1,0 +1,17 @@
+{
+  "descendant_correlation": {
+    "rho": 0.3240612421717518,
+    "p": 0.0
+  },
+  "partial_correlation_depth_controlled": {
+    "rho": 0.29319212449968773,
+    "p": 0.0
+  },
+  "leaf_baseline": 0.5841307509760392,
+  "leaf_top_phi": 0.3885911179173048,
+  "leaf_top_degree": 0.006891271056661562,
+  "leaf_top_pagerank": 0.0015313935681470138,
+  "parent_child_delta_mean": -0.0004789620579686016,
+  "parent_child_delta_std": 0.001440935069695115,
+  "fraction_child_greater": 0.373
+}

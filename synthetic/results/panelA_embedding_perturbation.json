@@ -1,0 +1,64 @@
+{
+  "delta": 1.0,
+  "n_seeds": 5,
+  "obs_radius": 2,
+  "mean_hidden_set_size": 135.40842911877397,
+  "sigmas": [
+    0.0,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "points": [
+    {
+      "sigma": 0.0,
+      "mean_descriptor_error": 0.0,
+      "std_descriptor_error": 0.0,
+      "mean_realized_epsilon": 0.0,
+      "std_realized_epsilon": 0.0,
+      "theoretical_bound_delta_H_eps": 0.0
+    },
+    {
+      "sigma": 0.005,
+      "mean_descriptor_error": 0.5360448314646218,
+      "std_descriptor_error": 0.18203545122950893,
+      "mean_realized_epsilon": 2.3131556262760316,
+      "std_realized_epsilon": 1.9764482724576264,
+      "theoretical_bound_delta_H_eps": 313.22076966129123
+    },
+    {
+      "sigma": 0.01,
+      "mean_descriptor_error": 1.1868798326893308,
+      "std_descriptor_error": 0.4580722542798078,
+      "mean_realized_epsilon": 2.506791803768192,
+      "std_realized_epsilon": 2.3036130959471652,
+      "theoretical_bound_delta_H_eps": 339.44074027606877
+    },
+    {
+      "sigma": 0.02,
+      "mean_descriptor_error": 3.0222160121704755,
+      "std_descriptor_error": 1.3916935869429834,
+      "mean_realized_epsilon": 2.6278465973855987,
+      "std_realized_epsilon": 2.2236651255967272,
+      "theoretical_bound_delta_H_eps": 355.8325797170992
+    },
+    {
+      "sigma": 0.05,
+      "mean_descriptor_error": 12.097731501208113,
+      "std_descriptor_error": 6.054592074540938,
+      "mean_realized_epsilon": 3.54594609771937,
+      "std_realized_epsilon": 2.608527958351605,
+      "theoretical_bound_delta_H_eps": 480.1509908320265
+    },
+    {
+      "sigma": 0.1,
+      "mean_descriptor_error": 28.091280131360076,
+      "std_descriptor_error": 11.16658499741915,
+      "mean_realized_epsilon": 7.778603964167253,
+      "std_realized_epsilon": 2.639651761716709,
+      "theoretical_bound_delta_H_eps": 1053.2885435249557
+    }
+  ]
+}

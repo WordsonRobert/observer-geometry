@@ -1,0 +1,18 @@
+{
+  "reembed_epochs": 50,
+  "base_epochs": 300,
+  "graphs_per_family": 20,
+  "observers_per_graph": 8,
+  "realizations": 10,
+  "max_levels_per_axis": 4,
+  "obs_radius": 2,
+  "betweenness_k": 50,
+  "embedding": "poincare_ball_dim10_stress",
+  "families": [
+    "balanced_tree",
+    "random_tree",
+    "sbm",
+    "preferential_attachment",
+    "hyperbolic_random"
+  ]
+}

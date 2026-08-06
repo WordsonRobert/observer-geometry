@@ -1,0 +1,58 @@
+{
+  "Degree": {
+    "spearman_rho": 0.2436009925965374,
+    "spearman_p": 1.6697579200544474e-217,
+    "kendall_tau": 0.16110346786404703,
+    "kendall_p": 7.040307027312896e-202,
+    "pearson_rho": 0.17929868752005268,
+    "pearson_p": 4.002615732878045e-117
+  },
+  "PageRank": {
+    "spearman_rho": 0.13030529792246934,
+    "spearman_p": 2.7629176869844458e-62,
+    "kendall_tau": 0.08489304065751847,
+    "kendall_p": 4.647371966843159e-59,
+    "pearson_rho": 0.09779681047133879,
+    "pearson_p": 9.986948340756772e-36
+  },
+  "Betweenness": {
+    "spearman_rho": 0.3618976904618594,
+    "spearman_p": 0.0,
+    "kendall_tau": 0.25333772970648,
+    "kendall_p": 0.0,
+    "pearson_rho": 0.09002553573180402,
+    "pearson_p": 1.6405030891068767e-30
+  },
+  "Eigenvector": {
+    "spearman_rho": 0.36565631351154687,
+    "spearman_p": 0.0,
+    "kendall_tau": 0.2556772765884907,
+    "kendall_p": 0.0,
+    "pearson_rho": 0.09275241689580788,
+    "pearson_p": 2.7178706723536895e-32
+  },
+  "Closeness": {
+    "spearman_rho": 0.41006440391072085,
+    "spearman_p": 0.0,
+    "kendall_tau": 0.2895691215646393,
+    "kendall_p": 0.0,
+    "pearson_rho": 0.585929101651173,
+    "pearson_p": 0.0
+  },
+  "Katz": {
+    "spearman_rho": NaN,
+    "spearman_p": NaN,
+    "kendall_tau": NaN,
+    "kendall_p": NaN,
+    "pearson_rho": NaN,
+    "pearson_p": NaN
+  },
+  "Harmonic": {
+    "spearman_rho": 0.4088495633092464,
+    "spearman_p": 0.0,
+    "kendall_tau": 0.2888359394820774,
+    "kendall_p": 0.0,
+    "pearson_rho": 0.5730113435621402,
+    "pearson_p": 0.0
+  }
+}

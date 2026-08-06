@@ -1,0 +1,67 @@
+{
+  "delta": 1.0,
+  "n_seeds": 5,
+  "obs_radius": 2,
+  "n_realizations_per_k": 100,
+  "note": "symmetric difference |H triangle H'| = k exactly (k/2 deleted, k/2 added)",
+  "k_values": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32
+  ],
+  "points": [
+    {
+      "k": 1,
+      "mean_descriptor_diff": 0.4783491790749094,
+      "std_descriptor_diff": 0.07077758461059595,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 1
+    },
+    {
+      "k": 2,
+      "mean_descriptor_diff": 0.12706346877646488,
+      "std_descriptor_diff": 0.018967702955118432,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 2
+    },
+    {
+      "k": 4,
+      "mean_descriptor_diff": 0.20984350038560595,
+      "std_descriptor_diff": 0.0376911564853275,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 4
+    },
+    {
+      "k": 8,
+      "mean_descriptor_diff": 0.3648447645628133,
+      "std_descriptor_diff": 0.09141519266316327,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 8
+    },
+    {
+      "k": 16,
+      "mean_descriptor_diff": 0.6678056666414104,
+      "std_descriptor_diff": 0.22806398734541866,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 16
+    },
+    {
+      "k": 24,
+      "mean_descriptor_diff": 0.9648480412549952,
+      "std_descriptor_diff": 0.3778152718419362,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 24
+    },
+    {
+      "k": 32,
+      "mean_descriptor_diff": 1.2622697455634133,
+      "std_descriptor_diff": 0.5260452458692492,
+      "n_observers_pooled": 97,
+      "bound_y_equals_k": 32
+    }
+  ]
+}
