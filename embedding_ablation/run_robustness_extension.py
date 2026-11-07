@@ -6,7 +6,7 @@ Same protocol as embedding_ablation/run_seed_robustness.py and run_grid_ablation
   * grid: {SAGE, GCN, GAT} x {Lorentz, Poincare, Euclidean}, c = 1, 300 epochs,
     no early stopping, no dropout, seed 0;
   * random null: untrained N(0,1) coordinates in R^16 with Euclidean distance.
-Phi is computed exactly (Proposition 3) at the dataset's K*, delta = 1, eps = 1/50.
+Phi is computed exactly (Proposition 2) at the dataset's K*, delta = 1, eps = 1/50.
 
 Usage: python embedding_ablation/run_robustness_extension.py <dataset> [K*]
   (K* defaults to the dataset's cached plateau budget). Emits

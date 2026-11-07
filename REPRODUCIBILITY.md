@@ -9,9 +9,10 @@ lands in.
 |---|---|---|
 | Thm. 1 empirical tightness (4 panels) | `make panels` | `synthetic/results/panel{A,B,C,D}_*.json` |
 | Thm. 1(e), shared hidden region | `python synthetic/panel_d_shared_h.py` | `synthetic/results/panelD_shared_H.json` |
+| Corollary 1 (normalized bounds), tightness | `python synthetic/panel_normalized.py` | `synthetic/results/panel_normalized.json` |
 | Figure 1, intervention benchmark | `make overnight` | `synthetic/results/paper_summary.json` |
 | Frozen-coordinate control | `make dose-response-frozen` | `synthetic/results/summary_frozen.json` |
-| Prop. 3 (exact descriptor), validation | `python analysis/exact_phi_all.py` | `results/exact_validation.json` |
+| Prop. 2 (exact descriptor), validation | `python analysis/exact_phi_all.py` | `results/exact_validation.json` |
 | Figure 2, rank and value convergence | `python run_everything.py --stages k_sweep`; `make fig2` | `<ds>/k_sweep_full_<ds>.json`, `figures/k_sweep_convergence.pdf` |
 | Budget laws, limit and bound | `make budget` | `results/budget_value.json` |
 | Hub cap has no effect | `make capcheck` | `results/cap_inertness.json` |

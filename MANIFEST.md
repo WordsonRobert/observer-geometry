@@ -12,7 +12,7 @@ ROOT (shared modules, imported flat)
   phi_utils.py            transition kernel, radii, sampling helpers
   simulate.py             sequential reference simulator of the observation process
   vectorized_simulate.py  batched simulator (degree cap 256 on the three large graphs)
-  exact_phi.py            exact evaluator of the expected descriptor (Proposition 3)
+  exact_phi.py            exact evaluator of the expected descriptor (Proposition 2)
   reconstruction_utils.py ogd_utils.py enrichment_utils.py
   run_everything.py       pipeline for the five real-world graphs
 
@@ -24,7 +24,7 @@ cora/ citeseer/ go_dag/ string_ppi/ obgn_arxiv/
 synthetic/
   hetero_graph.py graph_families.py observer_utils.py
   interventions_dose_response.py reembed.py run_dose_response.py aggregate.py
-  panel_a.py panel_b.py panel_c.py panel_d.py panel_d_shared_h.py
+  panel_a.py panel_b.py panel_c.py panel_d.py panel_d_shared_h.py panel_normalized.py
 
 embedding_ablation/
   embedding_variants.py run_ablation.py run_curvature_ablation.py run_seed_robustness.py

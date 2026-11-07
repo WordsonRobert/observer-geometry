@@ -1,7 +1,7 @@
 """
 exact_phi_all.py
 ================
-Exact expected descriptor E[Phi_K(s)] for every source s and K = 1..100 (Proposition 3),
+Exact expected descriptor E[Phi_K(s)] for every source s and K = 1..100 (Proposition 2),
 via exact enumeration of the single-trajectory visit probabilities (exact_phi.py).
 
 Writes <dataset>/exact/exact_<tag>.npz with

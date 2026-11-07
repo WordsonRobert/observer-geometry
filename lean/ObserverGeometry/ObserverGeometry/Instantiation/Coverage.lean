@@ -13,7 +13,7 @@ unobserved vertices then factorizes over vertices:
   `E[Σ_{u unobserved} w u] = Σ_u w u * (Σ_{ω'} [u ∉ S ω'] p ω') ^ K`,
 
 and, when `Σ p = 1`, the inner sum is `1 - p_u` with `p_u` the single-trajectory visit
-probability of `u`. This is the identity behind Proposition 3; it holds for any weights `w`,
+probability of `u`. This is the identity behind Proposition 2; it holds for any weights `w`,
 in particular `w u = exp (-δ d(v, u))`.
 -/
 
@@ -80,7 +80,7 @@ theorem coverage_identity (K : ℕ) (p : Ω → ℝ) (S : Ω → Finset V) (w : 
   rw [this]
   ring
 
-/-- **Coverage form of the expected normalized descriptor** (Proposition 3): for weights
+/-- **Coverage form of the expected normalized descriptor** (Proposition 2): for weights
 `w u = exp (-δ d(v,u))`, total mass `μ(v,V)`, and a trajectory law with `Σ p = 1`. -/
 theorem expected_muN_coverage (K : ℕ) (p : Ω → ℝ) (S : Ω → Finset V)
     (hp : ∑ ω, p ω = 1) {X : Type*} [MetricSpace X] (f : V → X) (δ : ℝ) (v : V) :

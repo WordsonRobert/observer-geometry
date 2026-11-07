@@ -22,6 +22,10 @@ smoothness characterization but **not** a test of the theorem.
 `panel_d_shared_h.py` fixes $H$ and moves only the observer, which is the
 theorem's actual setting. Report both, labelled differently.
 
+`panel_normalized.py` repeats the embedding, observer and hidden-region panels for the
+normalized functional mu(v,H)/mu(v,V) and the bounds of Corollary 1
+(`tanh(delta*eta/2)`, `|H xor H'|/mu(v,V)`), with the same graphs, perturbations and seeds.
+
 ## 2. Dose-response benchmark (`run_dose_response`, `aggregate`)
 
 Five graph families × four intervention axes × increasing dose, with the

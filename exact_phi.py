@@ -1,4 +1,4 @@
-"""Exact evaluation of the walk-based observer descriptor (Proposition 3 of the paper).
+"""Exact evaluation of the walk-based observer descriptor (Proposition 2 of the paper).
 
 The exploration process of the hyperbolic instantiation (``simulate.py`` /
 ``vectorized_simulate.py``) runs K i.i.d. trajectories from a source s. Each trajectory

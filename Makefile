@@ -5,7 +5,7 @@
 #   make overnight    intervention benchmark, re-embedded protocol (hours)
 #   make morning      encoder x geometry grid, seed and curvature ablations (GPU)
 #   make analysis     reconstruction, transfer, stability panels (minutes)
-#   make exact        exact descriptor (Proposition 3) and the analyses built on it
+#   make exact        exact descriptor (Proposition 2) and the analyses built on it
 #   make collect      results/paper_numbers.json
 #   make lean         build the Lean development
 #
@@ -85,6 +85,7 @@ panels:
 	$(PY) synthetic/panel_c.py
 	$(PY) synthetic/panel_d.py
 	$(PY) synthetic/panel_d_shared_h.py
+	$(PY) synthetic/panel_normalized.py
 
 # ------------------------------------------------- exact descriptor
 exact:

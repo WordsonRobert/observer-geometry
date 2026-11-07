@@ -16,7 +16,7 @@ lake build
 | `Instantiation/Mu` | the exponential functional `mu` as a region functional |
 | `Instantiation/Stability` | hidden-region, embedding and observer perturbation bounds for `mu` (Thm. 1(c)-(e)) |
 | `Instantiation/NormalizedStability` | the same bounds for the normalized descriptor, independent of the hidden-region size: `tanh(δη/2)` |
-| `Instantiation/Coverage` | coverage identity behind Proposition 3: expected remaining weight after K i.i.d. trajectories equals `Σ_u w_u (1 - p_u)^K` |
+| `Instantiation/Coverage` | coverage identity behind Proposition 2: expected remaining weight after K i.i.d. trajectories equals `Σ_u w_u (1 - p_u)^K` |
 | `Instantiation/Sensitivity`, `Canonicality` | sensitivity, measure property, shell decomposition (Prop. 2) |
 | `RegularTree/*` | k-regular tree as a metric space, closed form, threshold, identifiability, bridge to the framework descriptor (Thm. 2) |
 
