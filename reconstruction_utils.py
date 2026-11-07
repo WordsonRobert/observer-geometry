@@ -109,7 +109,7 @@ def compute_classical_features(G, N, betweenness_k=None, closeness_harmonic_samp
         except nx.PowerIterationFailedConvergence:
             print("  [WARN] Katz still didn't converge at alpha=0.01/max_iter=500 -- "
                   "filling with zeros so the rest of the pipeline can proceed. "
-                  "Flag this in the paper: Katz centrality is not reported for this dataset "
+                  "Katz centrality is not reported for this dataset "
                   "(power iteration instability, likely due to graph structure at this scale).")
             katz = {i: 0.0 for i in G.nodes()}
 

@@ -1,28 +1,10 @@
 """
 grid_pairwise.py
 ================
-Builds the FULL pairwise Spearman matrix across every saved Phi variant, plus
-the three cluster summaries the paper actually quotes.
-
-Section 7.1 currently claims "pairwise Spearman correlation between the nine
-resulting descriptor rankings", but run_grid_ablation only ever computed
-nine-vs-one-anchor. The ranges quoted in the text ("GCN internally consistent
-0.90-0.95", "SAGE and GAT agree 0.86-0.96") require genuine pairwise values.
-This produces them.
-
-It also computes the three numbers the section should be organised around:
-
-    within-encoder, across-geometry   -- how much does geometry matter?
-    within-geometry, across-encoder   -- how much does the encoder matter?
-    random null                       -- what does "no signal" look like?
-
-and compares all of them against the seed-to-seed noise floor from
-run_seed_robustness.py. Anything inside the noise band is indistinguishable,
-not "in agreement" -- that distinction is what Section 7.1 currently gets
-backwards.
-
-Reads whatever phi_grid_*.pt / phi_hvgae_seed_*.pt files exist. Pure numpy;
-runs in seconds.
+Full pairwise Spearman matrix across the saved Phi variants (encoder x geometry grid and the
+random null), with summaries within encoder (geometry effect), within geometry (encoder
+effect), within and across the SAGE/GAT and GCN clusters, and the random null, each read
+against the seed-to-seed noise floor from run_seed_robustness.py.
 
 Emits: embedding_ablation/grid_pairwise.json
 

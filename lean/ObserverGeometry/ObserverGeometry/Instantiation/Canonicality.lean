@@ -4,17 +4,13 @@ namespace Instantiation
 
 noncomputable section
 
--- Part IV: Canonicality.
+-- Measure property and radial (shell) decomposition of `mu` (Proposition 2(d)).
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {X : Type*} [MetricSpace X] (f : V → X)
 
--- ITEM 23 (Measure Property). mu satisfies all the axioms of a
--- finite measure on the powerset of V: nonnegativity, mu(∅) = 0, and
--- finite additivity on disjoint sets. (Monotonicity, already proven
--- separately as mu_mono, follows from these three in general for any
--- finitely additive nonnegative set function, but is stated
--- separately in Mu.lean since it's used independently throughout.)
+-- `mu` satisfies the axioms of a finite measure on the subsets of V: non-negativity,
+-- `mu ∅ = 0` and finite additivity on disjoint sets.
 omit [Fintype V] in
 theorem mu_is_finite_measure (δ : ℝ) (v : V) :
     (∀ H : Finset V, 0 ≤ mu f δ H v) ∧
@@ -22,10 +18,8 @@ theorem mu_is_finite_measure (δ : ℝ) (v : V) :
     (∀ A B : Finset V, Disjoint A B → mu f δ (A ∪ B) v = mu f δ A v + mu f δ B v) :=
   ⟨fun H => mu_nonneg f δ H v, mu_exhaustion f δ v, fun A B hAB => mu_additive f δ v A B hAB⟩
 
--- ITEM 24 (Radial Decomposition). mu depends only on the SHELL COUNT
--- function -- how many hidden nodes sit at each distinct realized
--- distance value from v -- not on vertex identity or any other
--- structure of H.
+-- Radial decomposition: `mu` depends on a hidden region only through its shell counts, the
+-- number of hidden vertices at each realized distance from the observer.
 
 open Classical in
 -- The distinct distance values realized by H (from v).
@@ -37,7 +31,7 @@ open Classical in
 def shellCount (v : V) (H : Finset V) (r : ℝ) : ℕ :=
   (H.filter (fun u => dist (f v) (f u) = r)).card
 
--- THE RADIAL DECOMPOSITION THEOREM.
+-- Radial decomposition theorem.
 omit [Fintype V] [DecidableEq V] in
 theorem mu_radial_decomposition (δ : ℝ) (v : V) (H : Finset V) :
     mu f δ H v = ∑ r ∈ shellValues f v H, (shellCount f v H r : ℝ) * Real.exp (-δ * r) := by

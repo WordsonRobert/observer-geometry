@@ -1,0 +1,27 @@
+{
+ "cora": {
+  "mean_gap_at_Kstar": 0.00954203339920793,
+  "mean_rel_gap_at_Kstar": 0.09129795133172137,
+  "exact_rho_Kstar_vs_100": 0.9912102764145571
+ },
+ "citeseer": {
+  "mean_gap_at_Kstar": 0.009695064006071244,
+  "mean_rel_gap_at_Kstar": 0.05936895803754977,
+  "exact_rho_Kstar_vs_100": 0.9915111946802971
+ },
+ "go_dag": {
+  "mean_gap_at_Kstar": 0.00021661581041640868,
+  "mean_rel_gap_at_Kstar": 0.05173255705951381,
+  "exact_rho_Kstar_vs_100": 0.9945302531753456
+ },
+ "string_ppi": {
+  "mean_gap_at_Kstar": 0.0008334928555526368,
+  "mean_rel_gap_at_Kstar": 0.08514135438279674,
+  "exact_rho_Kstar_vs_100": 0.9921634726944807
+ },
+ "obgn_arxiv": {
+  "mean_gap_at_Kstar": 0.00020430383289944678,
+  "mean_rel_gap_at_Kstar": 0.11343601088379078,
+  "exact_rho_Kstar_vs_100": 0.9921938386336971
+ }
+}

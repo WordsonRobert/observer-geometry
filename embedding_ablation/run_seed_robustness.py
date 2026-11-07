@@ -1,10 +1,10 @@
 """
-Run from ~/projects/niggtract2/embedding_ablation/ AFTER run_ablation.py.
+Run as: python embedding_ablation/run_seed_robustness.py  (after run_ablation.py)
 
-Trains HVGAE 5 times at the SAME chosen curvature (Cora's already-selected c),
-different random seeds only. Computes Phi for each, builds the 5x5 Spearman
-correlation matrix. Answers: does optimization noise (not geometry, not encoder
-choice) meaningfully affect Phi's rankings?
+Trains the HVGAE with seeds 0-3 at Cora's selected curvature (same architecture, data and
+protocol; only initialization and sampling differ), computes Phi for each, and reports the
+pairwise Spearman matrix: the seed-to-seed noise floor against which every other
+robustness comparison is read.
 """
 
 import sys as _sys, pathlib as _pl
@@ -27,7 +27,7 @@ from torch_geometric.datasets import Planetoid
 from common_hvgae import HVGAE, negative_sampling
 from run_ablation import compute_phi_for_embedding
 
-SEEDS = [0, 1, 2]
+SEEDS = [0, 1, 2, 3]
 
 
 def train_hvgae_seeded(data, in_dim, curvature, seed, epochs=300, lr=1e-3):
@@ -98,13 +98,16 @@ def main():
                       color="white" if abs(mat[i, j]) > 0.5 else "black", fontsize=8)
     plt.title("HVGAE seed robustness: Spearman(Phi_seed_i, Phi_seed_j)")
     plt.tight_layout()
-    plt.savefig("seed_robustness_correlation.png", dpi=150)
+    plt.savefig(str(_HERE / "seed_robustness_correlation.png"), dpi=150)
     plt.close()
 
-    with open("seed_robustness_results.json", "w") as f:
-        json.dump({"seeds": SEEDS, "matrix": mat.tolist(),
-                    "mean_off_diagonal": float(off_diag.mean()),
-                    "std_off_diagonal": float(off_diag.std())}, f, indent=2)
+    pairs = [float(mat[i, j]) for i in range(len(SEEDS)) for j in range(i + 1, len(SEEDS))]
+    with open(str(_HERE / "seed_robustness_results.json"), "w") as f:
+        json.dump({"seeds": SEEDS, "n_seeds": len(SEEDS), "matrix": mat.tolist(),
+                   "pairwise_spearman": pairs,
+                   "mean_off_diagonal": float(np.mean(pairs)),
+                   "std_off_diagonal": float(np.std(pairs)),
+                   "min_off_diagonal": float(np.min(pairs))}, f, indent=2)
     print("\nSaved seed_robustness_correlation.png, seed_robustness_results.json")
 
 

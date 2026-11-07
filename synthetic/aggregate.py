@@ -1,26 +1,12 @@
-"""
-aggregate.py -- PATCHED (cluster-aware)
-=======================================
-Streams results/raw*/<family>/graph_*.json into dose-response tables.
-
-WHAT CHANGED
-------------
-The previous version reported mean +/- 1.96 * sd/sqrt(n) with n = number of
-RECORDS. Records are not independent: realizations share an observer,
-observers share a graph AND its embedding, graphs share a family. With ~4.18M
-records the effective sample size for a family-level claim was closer to the
-number of graph instances (~20) than to the record count, making the reported
-intervals roughly 40x too narrow. Any reviewer who checks will say so.
-
-This version keeps the record-level Welford accumulator (O(1) memory, exact)
-but ALSO maintains a per-graph-instance mean, and computes the headline
-interval by clustering on instance. Both are emitted:
-
-    record_level    -- descriptive of the record distribution (old number)
-    cluster_level   -- the one to put in the paper
-
-Requires graph_instance_id on each record (the patched run_dose_response.py
-writes it). Falls back to family::graph_seed if absent.
+"""aggregate.py
+============
+Streams results/raw*/<family>/graph_*.json into dose-response tables. Records share
+observers, observers share a graph and its embedding, and graphs share a family, so the
+effective sample size for a family-level claim is the number of graph instances. Both are
+emitted:
+    record_level   -- Welford accumulator over records (descriptive)
+    cluster_level  -- per-graph-instance means; intervals clustered on instance (reported)
+Requires graph_instance_id on each record (falls back to family::graph_seed).
 
 Usage:
     python synthetic/aggregate.py

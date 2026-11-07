@@ -142,12 +142,8 @@ theorem treeDist_eq_zero_iff (u v : TreeVertex k D) : treeDist k D u v = 0 ↔ u
     rw [lcaDepth_self_eq_depth]
     simp
 
--- THE FOUR-POINT CONDITION (key structural fact about trees). Among
--- the three pairwise LCA-depths L(u,v), L(v,w), L(u,w), the third is
--- always at least the min of the other two -- provable directly from
--- downward-closure of agreement plus transitivity: if u,v agree on
--- their first m symbols and v,w agree on their first m symbols, then
--- u,w agree on their first m symbols too.
+-- Four-point condition: among L(u,v), L(v,w), L(u,w) the third is at least the minimum of the
+-- other two. Follows from downward closure of agreement and transitivity of equality.
 open Classical in
 theorem lcaDepth_ge_min (u v w : TreeVertex k D) :
     min (lcaDepth k D u v) (lcaDepth k D v w) ≤ lcaDepth k D u w := by
@@ -162,11 +158,7 @@ theorem lcaDepth_ge_min (u v w : TreeVertex k D) :
   unfold lcaDepth
   exact Nat.le_findGreatest (le_min hu hw) huw
 
--- THE TRIANGLE INEQUALITY. Follows purely from lcaDepth_ge_min
--- together with the existing bounds L(a,b) ≤ depth a, L(a,b) ≤ depth
--- b -- pure linear arithmetic once those facts are assembled, closed
--- directly by omega (which natively understands min and truncated
--- ℕ subtraction).
+-- Triangle inequality for `treeDist`, from `lcaDepth_ge_min` and `L(a,b) ≤ depth a, depth b`.
 theorem treeDist_triangle (u v w : TreeVertex k D) :
     treeDist k D u w ≤ treeDist k D u v + treeDist k D v w := by
   have hmin := lcaDepth_ge_min k D u v w

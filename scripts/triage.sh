@@ -30,7 +30,7 @@ if os.path.exists(p):
     d = torch.load(p, map_location="cpu")
     print(f"  cora cached K* = {d.get('K_star') if isinstance(d, dict) else None}")
 else:
-    print(f"  [ ] {p} missing -- copy your artifacts in, or run:")
+    print(f"  [ ] {p} missing -- copy the artifacts in, or run:")
     print("        python cora/cora_train_embedding.py")
     print("        python run_everything.py --datasets cora")
 files = sorted(glob.glob("embedding_ablation/embeddings/phi_*.pt"))

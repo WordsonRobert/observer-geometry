@@ -5,14 +5,9 @@ namespace RegularTree
 
 noncomputable section
 
--- Regular Tree: Section 2, Exact Descriptor (root observer).
---
--- SCOPE NOTE: mu_root is defined directly via the shell-count
--- formula from Geometry.lean's `shell_cardinality`, rather than
--- re-derived from summing over a raw TreeVertex Finset with an
--- actual constructed metric embedding. The bridge theorem connecting
--- this to a genuine framework ObsProcess (O_t(root) = {depth ≤ t},
--- hence H_t = {depth > t}) is built separately in TreeObservation.lean.
+-- Closed-form remaining geometry at the root of the k-regular tree (Theorem 2(a)). `muRoot` is
+-- defined by the shell-count formula; `FullBridge` identifies it with the general `mu` on the
+-- tree metric space and with the framework descriptor `Phi`.
 
 theorem exp_nat_mul_helper (δ : ℝ) (r : ℕ) : Real.exp (-δ * r) = Real.exp (-δ) ^ r := by
   rw [← Real.exp_nat_mul]

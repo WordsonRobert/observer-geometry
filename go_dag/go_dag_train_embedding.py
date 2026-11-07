@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/go_dag/
+Run as: python go_dag/go_dag_train_embedding.py
 
 Requires: pip install goatools
 
@@ -8,11 +8,9 @@ Downloads go-basic.obo, extracts the Biological Process namespace, builds the DA
 as ogbn-arxiv), and runs the curvature search.
 
 Also saves node_depths.pt -- shortest-path depth from the BP root for every term, since
-you'll want this for the "Phi vs depth" hierarchy experiment later. Given GO is a DAG
-(multi-parent terms exist), depth here is SHORTEST-PATH depth from root -- pick this
-definition deliberately (see earlier discussion on depth ambiguity in DAGs) and state
-it explicitly in the paper; longest-path depth would give different numbers for
-multi-parent terms.
+used by the hierarchy validation. GO is a DAG (terms can have several parents); depth is
+the SHORTEST-PATH depth from the root, so multi-parent terms take their shallowest depth.
+Only primary term identifiers become vertices (goatools also keys terms by alternate ids).
 """
 
 import sys as _sys, pathlib as _pl
@@ -55,6 +53,8 @@ def build_bp_dag(obo_path):
     for go_id, term in godag.items():
         if term.namespace != "biological_process":
             continue
+        if go_id != term.item_id:
+            continue  # goatools also keys each term by its alt_ids; skip those duplicates
         G.add_node(go_id, name=term.name)
         for parent in term.parents:
             if parent.namespace == "biological_process":

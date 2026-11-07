@@ -1,6 +1,6 @@
 # `string_ppi/`
 
-Dataset workspace. **Nothing here is committed** — everything is regenerated.
+Dataset workspace: cached embedding, descriptor and per-stage results for this graph.
 
 ## Expected contents
 
@@ -16,14 +16,18 @@ hvgae_embedding/
 _classical_features_cache.npy    [N, 7] centralities  <- EXPENSIVE, never delete casually
 phi.csv                          node_id, phi
 *.json                           per-stage results
+exact/                           exact descriptor artifacts (git-ignored; analysis/exact_phi_all.py)
+closer_baselines.json            comparison with coverage/accessibility/kernel-mass measures
 ```
 
 ## Regenerating
 
 ```bash
 cd string_ppi && python string_ppi_train_embedding.py && cd ..     # embedding + curvature search
-python run_everything.py --datasets string_ppi               # all stages
-python analysis/reconstruction_plus.py --datasets string_ppi # new analyses
+python run_everything.py --only string_ppi                  # all pipeline stages
+python analysis/reconstruction_plus.py --datasets string_ppi
+python analysis/exact_phi_all.py --datasets string_ppi       # exact descriptor -> exact/
+python analysis/closer_baselines.py --datasets string_ppi
 ```
 
 ## Warning

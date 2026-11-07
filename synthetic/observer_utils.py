@@ -4,12 +4,9 @@ Utilities for freezing an observation ball B(v,r), computing classical centralit
 computing MULTIPLE mu/Phi variants on a fixed embedding (VECTORIZED), computing rich
 hidden-region descriptors (before/after), and observer-level metadata.
 
-APPROXIMATION NOTE:
-Full hyperbolic re-embedding per intervention is computationally infeasible at scale.
-Instead we embed the BASE graph once (per graph instance) via a cheap spring layout,
-freeze coordinates, and place newly-added hidden nodes via neighbor-mean + jitter.
-Swap in your real HVGAE + geoopt pipeline in base_layout / place_new_node if you want
-true re-embedding fidelity.
+base_layout / place_new_node provide a cheap Euclidean layout used only by the stability
+panels' fallback path; the intervention benchmark embeds in the Poincare ball and
+re-embeds after each intervention (reembed.py).
 
 VECTORIZATION NOTE:
 The centrality metrics (betweenness, eigenvector, pagerank, closeness) are networkx
@@ -42,7 +39,7 @@ def freeze_ball(G, v, r):
 
 
 def base_layout(G, seed=0):
-    """One-time cheap layout used as the fixed embedding proxy. Replace with real HVGAE if desired."""
+    """Cheap Euclidean spring layout (fallback path; the benchmark itself uses reembed.py)."""
     pos = nx.spring_layout(G, seed=seed, dim=2)
     return {n: np.array(p) for n, p in pos.items()}
 

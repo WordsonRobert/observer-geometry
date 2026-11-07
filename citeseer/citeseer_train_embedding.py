@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/citeseer/
+Run as: python citeseer/citeseer_train_embedding.py
 """
 
 import sys as _sys, pathlib as _pl

@@ -1,0 +1,75 @@
+{
+  "cora": {
+    "curvature_parameter_c": 1.0,
+    "sectional_curvature": -1.0,
+    "h_hat_median": 1.1757285638331314,
+    "h_hat_iqr": [
+      1.0171434430541848,
+      1.4290910837819708
+    ],
+    "delta_crossover_median": 0.6500000000000001,
+    "delta_in_curvature_units_at_delta1": 1.0
+  },
+  "citeseer": {
+    "curvature_parameter_c": 4.0,
+    "sectional_curvature": -0.25,
+    "h_hat_median": 0.8556993047646508,
+    "h_hat_iqr": [
+      0.7158515289437585,
+      1.0217878158440596
+    ],
+    "delta_crossover_median": 0.45,
+    "delta_in_curvature_units_at_delta1": 2.0
+  },
+  "go_dag": {
+    "curvature_parameter_c": 1.0,
+    "sectional_curvature": -1.0,
+    "h_hat_median": 3.5141978201246213,
+    "h_hat_iqr": [
+      3.325266122458965,
+      3.6446483100296883
+    ],
+    "delta_crossover_median": 1.1500000000000001,
+    "delta_in_curvature_units_at_delta1": 1.0,
+    "root_depth_shell_counts": [
+      1,
+      18,
+      301,
+      1784,
+      4229,
+      5773,
+      5545,
+      4033,
+      1656,
+      527,
+      182,
+      59,
+      15,
+      6
+    ],
+    "root_peak_depth": 5,
+    "root_mean_log_growth_to_peak": 1.7321894310121866
+  },
+  "string_ppi": {
+    "curvature_parameter_c": 2.0,
+    "sectional_curvature": -0.5,
+    "h_hat_median": 2.382528264397373,
+    "h_hat_iqr": [
+      2.1210145031927587,
+      2.586882897130768
+    ],
+    "delta_crossover_median": 0.6500000000000001,
+    "delta_in_curvature_units_at_delta1": 1.4142135623730951
+  },
+  "obgn_arxiv": {
+    "curvature_parameter_c": 8.0,
+    "sectional_curvature": -0.125,
+    "h_hat_median": 0.8812605666052706,
+    "h_hat_iqr": [
+      0.6775284457102875,
+      1.0925626664600911
+    ],
+    "delta_crossover_median": 0.4,
+    "delta_in_curvature_units_at_delta1": 2.8284271247461903
+  }
+}

@@ -1,6 +1,6 @@
 # `obgn_arxiv/`
 
-Dataset workspace. **Nothing here is committed** — everything is regenerated.
+Dataset workspace: cached embedding, descriptor and per-stage results for this graph.
 
 ## Expected contents
 
@@ -16,14 +16,18 @@ hvgae_embedding/
 _classical_features_cache.npy    [N, 7] centralities  <- EXPENSIVE, never delete casually
 phi.csv                          node_id, phi
 *.json                           per-stage results
+exact/                           exact descriptor artifacts (git-ignored; analysis/exact_phi_all.py)
+closer_baselines.json            comparison with coverage/accessibility/kernel-mass measures
 ```
 
 ## Regenerating
 
 ```bash
 cd obgn_arxiv && python obgn_arxiv_train_embedding.py && cd ..     # embedding + curvature search
-python run_everything.py --datasets obgn_arxiv               # all stages
-python analysis/reconstruction_plus.py --datasets obgn_arxiv # new analyses
+python run_everything.py --only obgn_arxiv                  # all pipeline stages
+python analysis/reconstruction_plus.py --datasets obgn_arxiv
+python analysis/exact_phi_all.py --datasets obgn_arxiv       # exact descriptor -> exact/
+python analysis/closer_baselines.py --datasets obgn_arxiv
 ```
 
 ## Warning

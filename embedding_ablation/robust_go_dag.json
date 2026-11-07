@@ -1,0 +1,170 @@
+{
+ "dataset": "go_dag",
+ "K": 50,
+ "c_main": 1.0,
+ "seed_floor": {
+  "n": 6,
+  "min": 0.8373917326599993,
+  "max": 0.8573971207573691,
+  "mean": 0.8505746429375155
+ },
+ "geometry_encoder_fixed": {
+  "n": 9,
+  "min": 0.36122840296640074,
+  "max": 0.9036074389194464,
+  "mean": 0.7315126098173593
+ },
+ "lorentz_vs_poincare": {
+  "n": 3,
+  "min": 0.6867742382995854,
+  "max": 0.9036074389194464,
+  "mean": 0.8039938870697668
+ },
+ "hyperbolic_vs_euclidean": {
+  "n": 6,
+  "min": 0.36122840296640074,
+  "max": 0.894929114217787,
+  "mean": 0.6952719711911556
+ },
+ "encoder_geometry_fixed": {
+  "n": 9,
+  "min": 0.1500797619599061,
+  "max": 0.6147651263493691,
+  "mean": 0.3532093068271039
+ },
+ "gcn_vs_sage_gat": {
+  "n": 18,
+  "min": 0.11938672944899498,
+  "max": 0.6147651263493691,
+  "mean": 0.3019234247289532
+ },
+ "random_null": {
+  "n": 9,
+  "min": 0.008011563932886143,
+  "max": 0.04441134636557715,
+  "mean": 0.02901203208182873
+ },
+ "matrix": {
+  "SAGE_lorentz": {
+   "SAGE_lorentz": 1.0,
+   "SAGE_poincare": 0.8215999839902691,
+   "SAGE_euclidean": 0.85635248356134,
+   "GCN_lorentz": 0.17728107876202207,
+   "GCN_poincare": 0.17257026036716602,
+   "GCN_euclidean": 0.11938672944899498,
+   "GAT_lorentz": 0.44391005630792635,
+   "GAT_poincare": 0.44302809417679806,
+   "GAT_euclidean": 0.46219796406000513,
+   "random": 0.016087565441605108
+  },
+  "SAGE_poincare": {
+   "SAGE_lorentz": 0.8215999839902691,
+   "SAGE_poincare": 1.0,
+   "SAGE_euclidean": 0.8086740322220137,
+   "GCN_lorentz": 0.25832320760617367,
+   "GCN_poincare": 0.2433025779978722,
+   "GCN_euclidean": 0.193114736420269,
+   "GAT_lorentz": 0.41129322585293543,
+   "GAT_poincare": 0.429143233591705,
+   "GAT_euclidean": 0.4164563811682122,
+   "random": 0.027491927546122664
+  },
+  "SAGE_euclidean": {
+   "SAGE_lorentz": 0.85635248356134,
+   "SAGE_poincare": 0.8086740322220137,
+   "SAGE_euclidean": 1.0,
+   "GCN_lorentz": 0.15937155209005643,
+   "GCN_poincare": 0.14804882967759037,
+   "GCN_euclidean": 0.1500797619599061,
+   "GAT_lorentz": 0.3539361770421024,
+   "GAT_poincare": 0.35612102829899206,
+   "GAT_euclidean": 0.4370367680661419,
+   "random": 0.008011563932886143
+  },
+  "GCN_lorentz": {
+   "SAGE_lorentz": 0.17728107876202207,
+   "SAGE_poincare": 0.25832320760617367,
+   "SAGE_euclidean": 0.15937155209005643,
+   "GCN_lorentz": 1.0,
+   "GCN_poincare": 0.9036074389194464,
+   "GCN_euclidean": 0.894929114217787,
+   "GAT_lorentz": 0.48713815213199824,
+   "GAT_poincare": 0.6109571055221953,
+   "GAT_euclidean": 0.22864341779163372,
+   "random": 0.04441134636557715
+  },
+  "GCN_poincare": {
+   "SAGE_lorentz": 0.17257026036716602,
+   "SAGE_poincare": 0.2433025779978722,
+   "SAGE_euclidean": 0.14804882967759037,
+   "GCN_lorentz": 0.9036074389194464,
+   "GCN_poincare": 1.0,
+   "GCN_euclidean": 0.8033001099753421,
+   "GAT_lorentz": 0.4825095152827788,
+   "GAT_poincare": 0.6147651263493691,
+   "GAT_euclidean": 0.2178831651898845,
+   "random": 0.042500555777676564
+  },
+  "GCN_euclidean": {
+   "SAGE_lorentz": 0.11938672944899498,
+   "SAGE_poincare": 0.193114736420269,
+   "SAGE_euclidean": 0.1500797619599061,
+   "GCN_lorentz": 0.894929114217787,
+   "GCN_poincare": 0.8033001099753421,
+   "GCN_euclidean": 1.0,
+   "GAT_lorentz": 0.4304976484938734,
+   "GAT_poincare": 0.5445217737523805,
+   "GAT_euclidean": 0.1962270062769939,
+   "random": 0.026590736457913166
+  },
+  "GAT_lorentz": {
+   "SAGE_lorentz": 0.44391005630792635,
+   "SAGE_poincare": 0.41129322585293543,
+   "SAGE_euclidean": 0.3539361770421024,
+   "GCN_lorentz": 0.48713815213199824,
+   "GCN_poincare": 0.4825095152827788,
+   "GCN_euclidean": 0.4304976484938734,
+   "GAT_lorentz": 1.0,
+   "GAT_poincare": 0.6867742382995854,
+   "GAT_euclidean": 0.44714768420405043,
+   "random": 0.04021151305310828
+  },
+  "GAT_poincare": {
+   "SAGE_lorentz": 0.44302809417679806,
+   "SAGE_poincare": 0.429143233591705,
+   "SAGE_euclidean": 0.35612102829899206,
+   "GCN_lorentz": 0.6109571055221953,
+   "GCN_poincare": 0.6147651263493691,
+   "GCN_euclidean": 0.5445217737523805,
+   "GAT_lorentz": 0.6867742382995854,
+   "GAT_poincare": 1.0,
+   "GAT_euclidean": 0.36122840296640074,
+   "random": 0.03343756198978076
+  },
+  "GAT_euclidean": {
+   "SAGE_lorentz": 0.46219796406000513,
+   "SAGE_poincare": 0.4164563811682122,
+   "SAGE_euclidean": 0.4370367680661419,
+   "GCN_lorentz": 0.22864341779163372,
+   "GCN_poincare": 0.2178831651898845,
+   "GCN_euclidean": 0.1962270062769939,
+   "GAT_lorentz": 0.44714768420405043,
+   "GAT_poincare": 0.36122840296640074,
+   "GAT_euclidean": 1.0,
+   "random": 0.02236551817178873
+  },
+  "random": {
+   "SAGE_lorentz": 0.016087565441605108,
+   "SAGE_poincare": 0.027491927546122664,
+   "SAGE_euclidean": 0.008011563932886143,
+   "GCN_lorentz": 0.04441134636557715,
+   "GCN_poincare": 0.042500555777676564,
+   "GCN_euclidean": 0.026590736457913166,
+   "GAT_lorentz": 0.04021151305310828,
+   "GAT_poincare": 0.03343756198978076,
+   "GAT_euclidean": 0.02236551817178873,
+   "random": 1.0
+  }
+ },
+ "seconds": 254.8714005947113
+}

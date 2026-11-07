@@ -1,24 +1,11 @@
-"""
-Hyperbolic GraphSAGE Autoencoder in the Lorentz model.
-Deterministic (no VAE / no KL term) -- per the design decision that the downstream
-exploration process only ever consumes point coordinates and pairwise distances,
-never posterior uncertainty.
+"""Hyperbolic GraphSAGE autoencoder in the Lorentz model (deterministic; no KL term, since the
+exploration process consumes only coordinates and pairwise distances).
 
-SIMPLIFICATION NOTE (be aware of this before citing this as "true" Lorentz GraphSAGE):
-  Full manifold-valued message passing (Lorentz centroids at every layer, per-layer
-  log/exp maps between neighbor aggregations) is substantially more implementation
-  work than this. What's implemented here is the common, standard simplification
-  used in most practical hyperbolic GNN papers:
-    1. Two standard Euclidean GraphSAGE (mean-aggregation) layers operate on tangent
-       vectors at the origin.
-    2. The final tangent vector is mapped onto the Lorentz hyperboloid via the
-       exponential map at the origin (expmap0).
-    3. All downstream distances are genuine Lorentz/hyperbolic distances.
-  This is the standard "tangent-space encoder + expmap" pattern (as in Nickel & Kiela,
-  and most HGCN follow-ups that don't do full per-layer manifold ops). If a reviewer
-  pushes on this, the honest answer is: "we use a Euclidean encoder with a hyperbolic
-  output layer, which is the common practical approach; full manifold-valued
-  aggregation was not necessary since only final pairwise distances are consumed."
+Architecture: two GraphSAGE (mean) layers on tangent vectors at the origin, one exponential
+map onto the hyperboloid <x, x>_L = -c (sectional curvature -1/c), Fermi-Dirac decoder on
+hyperbolic distances. Message passing is in the tangent space (the common tangent-space
+encoder + expmap pattern), not fully manifold-valued aggregation; only final pairwise
+distances are consumed downstream.
 """
 import torch
 import torch.nn as nn
@@ -55,13 +42,9 @@ class HVGAE(nn.Module):
     """
     Deterministic Hyperbolic GraphSAGE Autoencoder, Lorentz model.
 
-    CURVATURE NOTE: the original spec called for a LEARNED curvature via softplus.
-    Verified experimentally that geoopt 0.5.1's Lorentz.expmap0 does not backpropagate
-    into k -- gradients don't reach it, so a "learnable" curvature parameter would
-    silently sit frozen at its initial value the whole run (confirmed: it did).
-    Rather than paper over this, curvature is treated here as a FIXED hyperparameter,
-    to be set per-dataset via a small grid search (e.g. c in {0.5, 1.0, 1.5, 2.0}),
-    consistent with your existing geometry-ablation infrastructure from the BFC work.
+    Curvature is a fixed hyperparameter selected by grid search (curvature_search.py):
+    in geoopt 0.5.1, Lorentz.expmap0 does not propagate gradients into k, so a learnable
+    curvature would stay at its initialization.
     """
     def __init__(self, in_dim, hidden_dim=64, latent_dim=16, dropout=0.2, curvature=1.0):
         super().__init__()

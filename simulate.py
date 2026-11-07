@@ -1,10 +1,11 @@
-"""
-Hyperbolic Boundary Potential (HBP) -- vectorized non-backtracking exploration simulator.
+"""Sequential reference simulator for the exploration process of the hyperbolic instantiation:
+K i.i.d. non-backtracking walks from a source, transition probabilities proportional to
+exp(-delta d_H), each walk stopping when its path probability would fall below eps.
 """
 import torch
 
 
-class HBPSimulator:
+class WalkSimulator:
     def __init__(self, row_ptr, col_idx, edge_weight, device="cpu"):
         self.device = device
         self.row_ptr = row_ptr.to(device)
@@ -61,3 +62,6 @@ class HBPSimulator:
             phi_accum += remaining_mass / W
 
         return phi_accum / n_repeats
+
+
+HBPSimulator = WalkSimulator  # name used by older scripts

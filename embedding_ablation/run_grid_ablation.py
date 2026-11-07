@@ -1,37 +1,12 @@
 """
-run_grid_ablation.py  -- PATCHED
-================================
-3 encoders (SAGE, GCN, GAT) x 3 target geometries (Lorentz, Poincare,
-Euclidean) on Cora, plus an untrained random-embedding null.
-
-WHAT CHANGED FROM THE PREVIOUS VERSION, AND WHY IT MATTERS
-----------------------------------------------------------
-1. SAGE/Lorentz is now TRAINED IN-GRID instead of being aliased to the main
-   HVGAE result with rho=1.0 by definition.
-
-   The old anchor came from curvature_search.py: curvature grid search, early
-   stopping on held-out link-prediction loss, dropout 0.2. The other eight
-   cells got fixed c=1.0, a flat 300 epochs, no early stopping, no dropout.
-   Every reported rho therefore conflated the thing being measured (encoder,
-   geometry) with a training-protocol difference -- and since the paper's
-   claim is about the ORDERING of sensitivities, that directly biased the
-   conclusion. All nine cells now share one protocol.
-
-2. The `already_done` dict and the phi_euclidean_sage.pt reuse branch are
-   gone. Reusing an artifact trained under a third protocol had the same
-   problem.
-
-3. K_DEFAULT is asserted against Cora's cached K* rather than hard-coded and
-   hoped for. If the cached phi was computed at a different K, this refuses to
-   run instead of silently comparing K=36 against a K=50 anchor.
-
-4. A random-embedding null is included. Without it there is no scale on which
-   to read rho=0.81 as high or low; it is the most informative single number
-   in the table.
-
-5. Every phi tensor is saved, so grid_pairwise.py can build the real 9x9
-   matrix. The paper claims a pairwise matrix; the old script only ever
-   computed nine-vs-one.
+run_grid_ablation.py
+====================
+3 encoders (SAGE, GCN, GAT) x 3 target geometries (Lorentz, Poincare, Euclidean) on Cora,
+plus an untrained random-embedding null. All nine cells share one training protocol
+(fixed c = 1, 300 epochs, no early stopping, no dropout); the SAGE/Lorentz anchor is trained
+in-grid rather than reused from the main embedding (which used curvature search and early
+stopping). K is read from Cora's cached K*. Every Phi tensor is saved so that
+grid_pairwise.py can build the full pairwise matrix.
 
 Emits: embedding_ablation/grid_ablation_results.json
        embedding_ablation/embeddings/phi_grid_<combo>.pt

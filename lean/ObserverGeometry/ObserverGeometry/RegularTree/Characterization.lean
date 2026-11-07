@@ -53,10 +53,8 @@ theorem muRoot_uniqueness (f : ℕ → ℝ)
   intro R hR
   exact key (D - R) R (by omega)
 
--- THEOREM 24 (Asymptotic Growth). In the DIVERGENT regime
--- a := (k-1)e^{-δ} > 1, muRoot(D,R) grows exactly like a^D: the
--- ratio tends to the CONSTANT k e^{-δ}/(a-1), independent of R
--- (the fixed cutoff becomes negligible as D → ∞).
+-- Divergent regime `a = (k-1) e^{-δ} > 1`: `muRoot D R / a^D → k e^{-δ} / (a - 1)`,
+-- independently of R (Theorem 2(c)).
 theorem muRoot_asymptotic_growth (hk : 1 ≤ k)
     (ha : 1 < ((k : ℝ) - 1) * Real.exp (-δ)) :
     Tendsto (fun D : ℕ => muRoot k δ D R / (((k : ℝ) - 1) * Real.exp (-δ)) ^ D)

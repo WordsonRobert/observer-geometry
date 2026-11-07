@@ -1,0 +1,73 @@
+{
+  "dataset": "Cora",
+  "K_star": 36,
+  "n_nodes": 2708,
+  "n_sampled": 2708,
+  "correlations": {
+    "total_kernel_mass": {
+      "spearman": 0.5515965105835359,
+      "partial_given_radius": 0.08583657020533847
+    },
+    "expected_observed_mass": {
+      "spearman": -0.6090684482311307,
+      "partial_given_radius": -0.8242258203317065
+    },
+    "expected_hidden_count": {
+      "spearman": 0.17412707973662217,
+      "partial_given_radius": 0.4041396567223275
+    },
+    "radius": {
+      "spearman": -0.6078937880020032,
+      "partial_given_radius": -0.05016263703827013
+    },
+    "degree": {
+      "spearman": 0.03514589912877492,
+      "partial_given_radius": -0.3740282622431972
+    },
+    "accessibility_h2": {
+      "spearman": 0.27921704727168445,
+      "partial_given_radius": -0.15403187462063406
+    },
+    "accessibility_h3": {
+      "spearman": 0.37425290197615463,
+      "partial_given_radius": -0.06575999447293296
+    },
+    "eccentricity": {
+      "spearman": -0.41718392512906727,
+      "partial_given_radius": -0.2793216467648528
+    }
+  },
+  "log_decomposition": {
+    "var_logC_over_var": 0.8719292587646768,
+    "var_logW_over_var": 0.7503706346479335,
+    "corr_logC_logW": 0.3846725446668529,
+    "spearman_W_radius": -0.8479604195948078,
+    "spearman_C_radius": -0.07187037965112057
+  },
+  "reconstruction": {
+    "classical7": {
+      "linear_r2": 0.012839591257562576,
+      "xgb_r2": 0.6148316064760284,
+      "xgb_r2_std": 0.010623415575507202,
+      "xgb_rank_recovery": 0.7463081588648235,
+      "community_xgb_r2": 0.36036867806907363,
+      "community_rank_recovery": 0.6525238831648082
+    },
+    "closer6": {
+      "linear_r2": 0.45049761784841474,
+      "xgb_r2": 0.709499711803388,
+      "xgb_r2_std": 0.020218323222421453,
+      "xgb_rank_recovery": 0.8548731039499167,
+      "community_xgb_r2": 0.5631023711775216,
+      "community_rank_recovery": 0.810454830619714
+    },
+    "classical7+closer6": {
+      "linear_r2": 0.5686476717192314,
+      "xgb_r2": 0.8318636022792223,
+      "xgb_r2_std": 0.010870933895114303,
+      "xgb_rank_recovery": 0.9102124653805234,
+      "community_xgb_r2": 0.7062174456064959,
+      "community_rank_recovery": 0.8743364556776216
+    }
+  }
+}

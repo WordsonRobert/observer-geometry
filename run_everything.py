@@ -1,64 +1,38 @@
-"""
-====================================================================================
-run_everything.py -- TopoAttract B: complete standalone experimental pipeline
-====================================================================================
+"""run_everything.py -- experimental pipeline for the five real-world graphs
+=========================================================================
+Regenerates the real-graph results of the paper (Section 6 and Appendix A) for Cora,
+Citeseer, GO DAG, STRING-PPI and ogbn-arXiv from the cached embeddings
+(<dataset>/hvgae_embedding/) and the raw data (<dataset>/data/). Embeddings and curvature
+selection are fixed inputs; this script does not retrain them. The embedding-robustness
+studies live in embedding_ablation/ and are not touched here.
 
-WHAT THIS SCRIPT DOES
-----------------------
-Regenerates every result needed for the paper's Tables 1 & 2 and Figure 1, for
-all 5 real-graph datasets (Cora, Citeseer, GO_DAG, ogbn-arxiv, STRING_PPI), from
-ONLY the cached trained embeddings (hvgae_embedding/*.pt) and raw downloaded data
-(data/). It does NOT retrain any HVGAE and does NOT rerun curvature search --
-those are treated as fixed, already-decided inputs.
+Stages: phi, correlations, reconstruction, radius, classification, hierarchy, biology, ogd,
+k_sweep, runtime. Each stage writes a completion marker to .checkpoint_<dataset>.json, and
+reruns skip completed stages (--force to redo).
 
-SCOPE: embedding_ablation/ (seed/curvature/embedding-variant robustness) is
-COMPLETELY OUT OF SCOPE for this script -- it is never read from or written to.
-That's a separate, standalone experiment track with its own scripts
-(run_ablation.py, run_curvature_ablation.py, run_seed_robustness.py,
-compare_results.py) that this script does not touch.
+Phi is computed with the vectorized simulator (vectorized_simulate.py), which advances the K
+i.i.d. trajectories synchronously; it agrees with the sequential reference simulator
+(simulate.py) at Spearman 0.9963 (Cora) and 0.9977 (ogbn-arXiv). The exact evaluator in
+exact_phi.py removes Monte Carlo error altogether (analysis/exact_phi_all.py).
 
-CHECKPOINTING
--------------
-Every stage writes a completion marker to `.checkpoint_<dataset>.json` in the
-project root. If the script is interrupted and rerun, completed stages are
-SKIPPED automatically (idempotent). Use --force to redo a stage anyway.
+Device: OG_DEVICE if set, else CUDA if available, else CPU.
 
-SPEED
------
-Phi (re)computation uses the VALIDATED vectorized simulator (vectorized_simulate.py),
-confirmed on this exact hardware to reproduce the original sequential Phi with
-Spearman rho > 0.99 (0.9963 on Cora, 0.9977 on ogbn-arxiv) at a ~380x speedup
-(68 seconds vs original 25794 seconds / 7.2 hours on ogbn-arxiv).
+Usage
+    python run_everything.py                          # all datasets, all stages
+    python run_everything.py --only cora citeseer
+    python run_everything.py --stages phi radius
+    python run_everything.py --force
+    python run_everything.py --dry-run
 
-USAGE
------
-    cd /DATA/24ms190/niggtract2
-    python run_everything.py                          # run everything, all datasets
-    python run_everything.py --only cora citeseer      # just these datasets
-    python run_everything.py --stages phi radius        # just these stages
-    python run_everything.py --force                    # ignore checkpoints, redo all
-    python run_everything.py --dry-run                   # print plan, do nothing
+Outputs (per dataset folder): correlation_summary.json, reconstruction_results.json,
+radius_correlation.json, classification.json (citation graphs), hierarchy_validation.json
+(GO DAG), biology_validation.json (STRING-PPI), ogd_experiment_results.json and
+ogd_correlation_matrix.json (Cora, Citeseer), runtime_summary.json, k_sweep_full.json.
 
-OUTPUT LOCATION
----------------
-Results land in each dataset's own folder:
-  correlation_summary.json, reconstruction_results.json, radius_correlation.json,
-  classification.json (citation graphs), hierarchy_validation.json (go_dag),
-  biology_validation.json (string_ppi), ogd_experiment_results.json +
-  ogd_correlation_matrix.json (cora/citeseer only, per original scope),
-  runtime_summary.json, k_sweep_full.json (dense K=5..100 sweep)
-
-IMPORTANT CAVEATS -- READ BEFORE TRUSTING OUTPUT
--------------------------------------------------
-1. stage_hierarchy() and stage_biology() are now PORTED from the real
-   go_dag_analysis.py / run_section3.py / enrichment_utils.py (not guessed
-   reconstructions) -- these should faithfully match your original logic,
-   including the log1p(descendant_count) fix and real STRING-weighted graph
-   for functional coherence + real GO enrichment via gene-symbol mapping.
-2. stage_biology()'s first run will be slow due to NCBI gene2go.gz/gene_info.gz
-   downloads (potentially 10-20+ minutes) -- cached after that.
-3. stage_ogd() only applies to cora/citeseer, matching your original scope --
-   it is a no-op for go_dag/obgn_arxiv/string_ppi.
+Notes
+1. The biology stage downloads NCBI gene2go/gene_info on first use (10-20 min), then caches.
+2. The GO DAG graph uses each term's primary identifier only; goatools also keys every term
+   by its alternate identifiers, which must not become separate vertices.
 """
 
 
@@ -166,6 +140,8 @@ def load_go_dag():
     for go_id, term in godag.items():
         if term.namespace != "biological_process":
             continue
+        if go_id != term.item_id:
+            continue  # skip alt_id duplicate keys
         G_directed.add_node(go_id, name=term.name)
         for parent in term.parents:
             if parent.namespace == "biological_process":
@@ -239,6 +215,13 @@ DATASET_CONFIG = {
 _graph_cache = {}
 
 
+def _default_device():
+    """OG_DEVICE overrides; otherwise the first CUDA device if present, else CPU."""
+    if os.environ.get("OG_DEVICE"):
+        return os.environ["OG_DEVICE"]
+    return "cuda" if torch.cuda.is_available() else "cpu"
+
+
 def get_graph(name, cfg):
     """Cache the loaded graph per dataset so we don't reload it for every stage."""
     if name not in _graph_cache:
@@ -251,16 +234,12 @@ def get_graph(name, cfg):
 # STAGE 1: Phi (re)computation via the validated vectorized simulator
 # ====================================================================================
 
-def stage_phi(name, cfg, folder, device="cuda:1"):
+def stage_phi(name, cfg, folder, device=None):
+    device = device or _default_device()
     """
-    Recomputes Phi using the vectorized simulator, at the SAME K* as the original
-    cached run (read from phi_full_meanstd.pt's K_star field), with delta=1.0,
-    eps=1/50 matching full_analysis.py's DELTA_DEFAULT/EPS_DEFAULT -- adjust here
-    if a specific dataset actually used different values.
-
-    Overwrites phi_full_meanstd.pt with the new (vectorized) Phi tensor, and
-    exports phi.csv. Safe given your local backup and the validated rho>0.99
-    agreement with the original sequential simulator.
+    Recomputes Phi with the vectorized simulator at the cached budget K* (read from
+    phi_full_meanstd.pt), delta = 1, eps = 1/50, one realization per call; overwrites
+    phi_full_meanstd.pt and exports phi.csv.
     """
     old_data_path = folder / "hvgae_embedding" / "phi_full_meanstd.pt"
     if not old_data_path.exists():
@@ -330,13 +309,8 @@ _features_cache = {}  # in-memory cache, in case both stages run in the same pro
 
 def get_classical_features_cached(name, cfg, folder, G_int, N):
     """
-    compute_classical_features() is expensive (betweenness/eigenvector at 169k
-    nodes took ~6 hours single-threaded on this server, vs. an original ~23 min
-    baseline on different hardware -- see debugging discussion). Previously,
-    stage_correlations and stage_reconstruction each called it independently,
-    computing the SAME centralities twice back-to-back. This caches the result
-    both in-memory (if both stages run in one process) and on disk (survives
-    across separate script invocations), so it's only ever computed once.
+    Classical centralities are expensive (hours on ogbn-arXiv), so they are cached in
+    memory and on disk (<dataset>/_classical_features_cache.npy) and computed once.
     """
     if name in _features_cache:
         return _features_cache[name]
@@ -508,7 +482,7 @@ def stage_classification(name, cfg, folder):
     G, N, node_id_map, data = get_graph(name, cfg)
     if not hasattr(data, "train_mask"):
         print(f"  [WARN] {name} has no train_mask/test_mask -- ogbn-arxiv uses OGB's "
-              f"official split, not Planetoid masks -- verify this is wired up before trusting.")
+              f"official split, not Planetoid masks -- check the split before use.")
         return None
 
     phi_data = torch.load(folder / "hvgae_embedding" / "phi_full_meanstd.pt")
@@ -539,13 +513,8 @@ def stage_classification(name, cfg, folder):
 # ====================================================================================
 
 def stage_hierarchy(name, cfg, folder):
-    """
-    Ported from the real go_dag_analysis.py (previously unseen -- this replaces
-    the earlier best-effort reconstruction). Key fix vs. that earlier version:
-    correlates Phi against log1p(descendant_count), NOT raw descendant_count --
-    the original script explicitly uses log1p to compress the heavy-tailed
-    descendant-count distribution before correlating.
-    """
+    """GO DAG hierarchy validation: Phi vs. log(1 + descendants) with and without
+    controlling for depth, leaf composition of top-10% sets, parent-child differences."""
     if name != "go_dag":
         print(f"  [skip] hierarchy validation only applies to go_dag")
         return None
@@ -564,6 +533,8 @@ def stage_hierarchy(name, cfg, folder):
     for go_id, term in godag.items():
         if term.namespace != "biological_process":
             continue
+        if go_id != term.item_id:
+            continue  # skip alt_id duplicate keys
         G_dag.add_node(go_id)
         for parent in term.parents:
             if parent.namespace == "biological_process":
@@ -577,7 +548,7 @@ def stage_hierarchy(name, cfg, folder):
     for i, go_id in enumerate(node_id_map):
         if go_id in G_rev:
             descendant_counts[i] = len(nx.descendants(G_rev, go_id))
-    log_desc = np.log1p(descendant_counts)  # THE FIX -- original correlates against log1p, not raw counts
+    log_desc = np.log1p(descendant_counts)  # heavy-tailed counts: correlate against log1p
 
     valid = depths >= 0
     rho_uncontrolled, p_uncontrolled = spearmanr(phi[valid], log_desc[valid])
@@ -642,20 +613,8 @@ def stage_hierarchy(name, cfg, folder):
 # ====================================================================================
 
 def stage_biology(name, cfg, folder):
-    """
-    Ported from the real run_section3.py (previously unseen). Fixes vs. the
-    earlier placeholder version:
-      1. Rebuilds G with REAL STRING confidence weights from the raw links file
-         (data.edge_index alone carries no weight info -- the earlier version's
-         functional coherence number was measuring nothing, since every edge
-         defaulted to weight=1.0).
-      2. Runs REAL GO enrichment via enrichment_utils (gene-symbol mapping +
-         goatools), not just structural Jaccard overlap.
-      3. Enrichment on the SET-DIFFERENCE gene lists (top-Phi minus top-Degree,
-         and vice versa) -- the actual "what does Phi find that degree doesn't"
-         question, which the earlier version never asked at all.
-      4. Includes conductance in subgraph stats (earlier version omitted it).
-    """
+    """STRING-PPI biological validation: functional coherence of the top-5% sets by Phi and
+    by degree against degree-preserving nulls, and GO enrichment on the set differences."""
     if name != "string_ppi":
         print(f"  [skip] biology validation only applies to string_ppi")
         return None
@@ -827,7 +786,8 @@ def stage_biology(name, cfg, folder):
 # STAGE 8: Dense K-sweep (K=5,10,...,100)
 # ====================================================================================
 
-def stage_k_sweep(name, cfg, folder, device="cuda:1"):
+def stage_k_sweep(name, cfg, folder, device=None):
+    device = device or _default_device()
     embedding_path = folder / "hvgae_embedding" / "embedding.pt"
     curvature_path = folder / "hvgae_embedding" / "chosen_curvature.txt"
     z, manifold, c = load_embedding(str(embedding_path), str(curvature_path))
@@ -873,11 +833,11 @@ def stage_k_sweep(name, cfg, folder, device="cuda:1"):
 def stage_ogd(name, cfg, folder):
     """
     Ported from cora_ogd_experiment.py / citeseer_ogd_experiment.py -- these were
-    always Cora/Citeseer-only per your original scope, so this stage no-ops for
+    Cora/Citeseer only; this stage is a no-op for
     go_dag/obgn_arxiv/string_ppi. Runs the full 7-experiment OGD battery (single-
     descriptor ablation, full-descriptor comparison, classical-vs-observer,
     combined, permutation importance, dimensionality curve, descriptor correlation
-    matrix) using the shared ogd_utils.py -- unchanged from your original scripts.
+    matrix) using ogd_utils.py.
     """
     if name not in ("cora", "citeseer"):
         print(f"  [skip] OGD experiment only applies to cora/citeseer (per original scope)")

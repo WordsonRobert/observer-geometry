@@ -1,14 +1,13 @@
 """
-Run from ~/projects/niggtract2/string_ppi/
+Run as: python string_ppi/string_ppi_train_embedding.py
 
 Downloads the human STRING protein-protein interaction network (species 9606),
 filters by combined confidence score, builds a graph, and runs the curvature search.
 
 STRING has no natural node features (it's just protein IDs + interaction scores), so
 this uses log-degree + a random projection as a simple placeholder feature vector.
-If you have real protein features (e.g. embeddings from sequence or GO annotations)
-elsewhere in your pipeline, swap them in here -- this placeholder is NOT meant to be
-biologically meaningful, just numerically reasonable input for the encoder.
+Input features are log(1 + degree) and 63 i.i.d. N(0, 1) features (seed 0); they are not
+biologically meaningful. Edges: combined score >= 700.
 """
 
 import sys as _sys, pathlib as _pl

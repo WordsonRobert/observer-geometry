@@ -14,7 +14,7 @@ noncomputable section
 
 variable {k D : ℕ}
 
--- THE METRIC SPACE INSTANCE.
+-- The tree vertices with `treeDist` form a metric space.
 instance : MetricSpace (TreeVertex k D) where
   dist u v := (treeDist k D u v : ℝ)
   dist_self u := by
@@ -68,10 +68,8 @@ theorem mu_eq_muAtVertex (δ : ℝ) (s : TreeVertex k D) (R : ℕ) :
   simp only [id]
   rfl
 
--- THE CAPSTONE. Everything above exists "in principle" but nobody
--- has stated the actual sentence the paper wants: the framework
--- descriptor Phi, instantiated on the tree via treeObs and mu,
--- literally equals the closed-form muRoot at the root.
+-- Bridge (Theorem 2(b)): the framework descriptor `Phi`, instantiated on the tree with the
+-- metric-ball observation process and `mu`, equals the closed form `muRoot` at the root.
 
 theorem treeObs_H_eq (s : TreeVertex k D) (t : ℕ) :
     (treeObs k D).H s t = Finset.univ.filter (fun w => t < treeDist k D s w) := by
@@ -86,8 +84,7 @@ theorem J_treeObs_root (δ : ℝ) (R : ℕ) (hk : 1 ≤ k) :
   rw [treeObs_H_eq, mu_eq_muAtVertex]
   exact muAtVertex_root_eq_muRoot k D δ R hk
 
--- THE THEOREM THE PAPER CITES: the framework descriptor at the root
--- of a k-regular tree has this exact closed form.
+-- `Phi root = Σ_t P(t) * muRoot k δ D t` for every budget distribution P.
 theorem Phi_root_eq (δ : ℝ) (P : BudgetDist) (hk : 1 ≤ k) :
     (Instantiation.muRGF (id : TreeVertex k D → TreeVertex k D) δ).Phi
       (treeObs k D) P (root k D) = ∑ t ∈ P.support, P.weight t * muRoot k δ D t := by

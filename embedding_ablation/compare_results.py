@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/embedding_ablation/ AFTER run_ablation.py and
+Run as: python embedding_ablation/compare_results.py  (after run_ablation.py and)
 (optionally) run_curvature_ablation.py.
 
 Builds Spearman correlation matrices:

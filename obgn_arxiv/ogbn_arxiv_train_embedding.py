@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/ogbn_arxiv/
+Run as: python obgn_arxiv/ogbn_arxiv_train_embedding.py
 
 Requires: pip install ogb
 

@@ -1,7 +1,7 @@
 """
-Vectorized replacement for simulate.py's HBPSimulator.
+Vectorized version of the exploration simulator in simulate.py.
 
-DESIGN NOTES (read before trusting this):
+Design notes:
 
 1. Preserves the exact walk semantics of the original: from a source node, run K
    independent non-backtracking weighted-random walks, each terminating when its
@@ -70,8 +70,9 @@ class VectorizedHBPSimulator:
         distance, since weight = exp(-delta*dist)). This is a real approximation for
         extreme-degree hub nodes (e.g. ogbn-arxiv has one node with degree 13161 vs
         mean degree ~13.7) -- without capping, the padded tensor scales with the MAX
-        degree across ALL nodes, which can blow past available VRAM. Flag this
-        truncation explicitly if you use it in the paper: it changes hub-node walk
+        degree across ALL nodes, which can blow past available VRAM. At eps = 1/50 the
+        truncation has no effect on any reported dataset (analysis/cap_inertness.py): every
+        transition probability out of an over-cap vertex is below eps. In general it changes hub-node walk
         dynamics (they sample from their nearest max_degree_cap neighbors only,
         not their full neighbor set), though it should have negligible effect on
         the vast majority of non-hub nodes.

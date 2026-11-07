@@ -73,6 +73,7 @@ def main():
             "k_sweep":             read_any(f / "k_sweep_full.json",
                                             f / f"k_sweep_full_{name}.json"),
             "runtime":             read(f / "runtime_summary.json"),
+            "closer_baselines":    read(f / "closer_baselines.json"),
         }
         for k in ("correlations", "reconstruction_plus", "radius", "k_sweep"):
             if d[k] is None:
@@ -88,6 +89,8 @@ def main():
                                 "ablation/seed_robustness"),
         "curvature":       read(ab / "curvature_correlation.json"),
         "variants":        read(ab / "embedding_variant_correlation.json"),
+        "robustness_citeseer": read(ab / "robust_citeseer.json"),
+        "robustness_go_dag":   read(ab / "robust_go_dag.json"),
     }
 
     # ---------------- synthetic ----------------
@@ -103,6 +106,12 @@ def main():
         "dose_response_frozen": read(sy / "summary_frozen.json"),
     }
     out["ablation"]["cross_dataset_transfer"] = read(RESULTS / "cross_dataset_transfer.json")
+    out["ablation"]["transfer_heldout"] = read(RESULTS / "transfer_heldout.json")
+
+    # ---------------- exact descriptor ----------------
+    out["exact"] = {k: read(RESULTS / f"{k}.json") for k in
+                    ("exact_validation", "budget_value", "cap_inertness", "sensitivity",
+                     "growth", "fig2_summary")}
 
     # ================= TABLES =================
     # Table 1: structural distinctiveness

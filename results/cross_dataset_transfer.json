@@ -17,46 +17,46 @@
   "matrix": {
     "cora": {
       "cora": {
-        "r2_mean": 0.9783849080821022,
-        "r2_std": 0.0,
-        "spearman_mean": 0.9889688403351095,
-        "spearman_std": 0.0,
+        "r2_mean": 0.9783858856681343,
+        "r2_std": 1.1102230246251565e-16,
+        "spearman_mean": 0.9889565109798101,
+        "spearman_std": 1.1102230246251565e-16,
         "is_self": true
       },
       "citeseer": {
-        "r2_mean": 0.02983524526290382,
+        "r2_mean": 0.03748669553866024,
         "r2_std": 0.0,
-        "spearman_mean": 0.5016239076152184,
+        "spearman_mean": 0.5042012907342377,
         "spearman_std": 0.0,
         "is_self": false
       },
       "go_dag": {
-        "r2_mean": -0.8585632902137275,
+        "r2_mean": -0.9680133092898271,
         "r2_std": 0.0,
-        "spearman_mean": 0.12674480393596654,
-        "spearman_std": 0.0,
+        "spearman_mean": 0.09923374262149424,
+        "spearman_std": 1.3877787807814457e-17,
         "is_self": false
       },
       "string_ppi": {
-        "r2_mean": -0.6520719591569617,
+        "r2_mean": -0.6318950718509828,
         "r2_std": 0.0,
-        "spearman_mean": 0.1580977357993106,
+        "spearman_mean": 0.17115412338835123,
         "spearman_std": 0.0,
         "is_self": false
       },
       "obgn_arxiv": {
-        "r2_mean": 0.15260685279997588,
+        "r2_mean": 0.17993751211698117,
         "r2_std": 0.0,
-        "spearman_mean": 0.5780415099011718,
+        "spearman_mean": 0.5805025272823219,
         "spearman_std": 0.0,
         "is_self": false
       }
     },
     "citeseer": {
       "cora": {
-        "r2_mean": -0.17030050496688065,
+        "r2_mean": -0.17029906005345175,
         "r2_std": 0.0,
-        "spearman_mean": 0.492316998352212,
+        "spearman_mean": 0.49231762984431593,
         "spearman_std": 0.0,
         "is_self": false
       },
@@ -68,146 +68,146 @@
         "is_self": true
       },
       "go_dag": {
-        "r2_mean": -0.8512648268835529,
-        "r2_std": 1.1102230246251565e-16,
-        "spearman_mean": -0.12369961022502869,
+        "r2_mean": -0.8558872076464632,
+        "r2_std": 0.0,
+        "spearman_mean": -0.1266249155312158,
         "spearman_std": 0.0,
         "is_self": false
       },
       "string_ppi": {
-        "r2_mean": -0.4987322236712448,
+        "r2_mean": -0.49873187126656093,
         "r2_std": 0.0,
-        "spearman_mean": 0.04573806483315332,
+        "spearman_mean": 0.04573823500700255,
         "spearman_std": 0.0,
         "is_self": false
       },
       "obgn_arxiv": {
-        "r2_mean": -0.2940722626628385,
+        "r2_mean": -0.29407242915312604,
         "r2_std": 0.0,
-        "spearman_mean": 0.3617456500432199,
+        "spearman_mean": 0.361745605333464,
         "spearman_std": 0.0,
         "is_self": false
       }
     },
     "go_dag": {
       "cora": {
-        "r2_mean": -1.135217723812782,
+        "r2_mean": -0.6469871774370815,
         "r2_std": 0.0,
-        "spearman_mean": 0.15979746906444506,
-        "spearman_std": 0.0,
+        "spearman_mean": 0.17334036590041033,
+        "spearman_std": 2.7755575615628914e-17,
         "is_self": false
       },
       "citeseer": {
-        "r2_mean": -1.9764447116762043,
-        "r2_std": 2.220446049250313e-16,
-        "spearman_mean": -0.02015216473397604,
+        "r2_mean": -0.318723042346847,
+        "r2_std": 0.0,
+        "spearman_mean": 0.09896341455186168,
         "spearman_std": 0.0,
         "is_self": false
       },
       "go_dag": {
-        "r2_mean": 0.8736126540158761,
-        "r2_std": 1.1102230246251565e-16,
-        "spearman_mean": 0.9384230738523226,
+        "r2_mean": 0.8611876833692585,
+        "r2_std": 0.0,
+        "spearman_mean": 0.9322344478428195,
         "spearman_std": 0.0,
         "is_self": true
       },
       "string_ppi": {
-        "r2_mean": -0.8574481574624429,
+        "r2_mean": -1.3057417390182335,
         "r2_std": 0.0,
-        "spearman_mean": -0.11916731355338368,
-        "spearman_std": 0.0,
+        "spearman_mean": -0.3748700654634643,
+        "spearman_std": 5.551115123125783e-17,
         "is_self": false
       },
       "obgn_arxiv": {
-        "r2_mean": -1.0776889826929854,
+        "r2_mean": -0.8084163015803059,
         "r2_std": 0.0,
-        "spearman_mean": -0.07999481028535757,
+        "spearman_mean": -0.04883658282743606,
         "spearman_std": 0.0,
         "is_self": false
       }
     },
     "string_ppi": {
       "cora": {
-        "r2_mean": -0.47821464990254836,
+        "r2_mean": -0.426616424782011,
         "r2_std": 0.0,
-        "spearman_mean": 0.2711733524874319,
+        "spearman_mean": 0.27338704833829375,
         "spearman_std": 0.0,
         "is_self": false
       },
       "citeseer": {
-        "r2_mean": -1.4520330912777009,
-        "r2_std": 2.220446049250313e-16,
-        "spearman_mean": 0.0553758514745484,
-        "spearman_std": 6.938893903907228e-18,
+        "r2_mean": -1.3023310272936568,
+        "r2_std": 0.0,
+        "spearman_mean": 0.008054390687464753,
+        "spearman_std": 0.0,
         "is_self": false
       },
       "go_dag": {
-        "r2_mean": -1.0926808267340706,
+        "r2_mean": -0.9613221362601703,
         "r2_std": 0.0,
-        "spearman_mean": -0.29503290023851675,
+        "spearman_mean": -0.24305180600959686,
         "spearman_std": 0.0,
         "is_self": false
       },
       "string_ppi": {
-        "r2_mean": 0.9451256761190638,
-        "r2_std": 0.0,
-        "spearman_mean": 0.9736846383536619,
+        "r2_mean": 0.9443782523187328,
+        "r2_std": 1.1102230246251565e-16,
+        "spearman_mean": 0.9732722776998788,
         "spearman_std": 0.0,
         "is_self": true
       },
       "obgn_arxiv": {
-        "r2_mean": 0.0005812374034648293,
+        "r2_mean": 0.11550991360097895,
         "r2_std": 0.0,
-        "spearman_mean": 0.5688860656760177,
+        "spearman_mean": 0.5583452317548602,
         "spearman_std": 0.0,
         "is_self": false
       }
     },
     "obgn_arxiv": {
       "cora": {
-        "r2_mean": -2.691575026370631,
-        "r2_std": 4.440892098500626e-16,
-        "spearman_mean": -0.13162318905098483,
+        "r2_mean": -2.993616032036124,
+        "r2_std": 0.0,
+        "spearman_mean": -0.14305374293915835,
         "spearman_std": 0.0,
         "is_self": false
       },
       "citeseer": {
-        "r2_mean": -5.558484980817018,
-        "r2_std": 8.881784197001252e-16,
-        "spearman_mean": -0.12468894695584741,
+        "r2_mean": -6.072738378838648,
+        "r2_std": 0.0,
+        "spearman_mean": -0.10186841272459009,
         "spearman_std": 0.0,
         "is_self": false
       },
       "go_dag": {
-        "r2_mean": -5.000471340157436,
+        "r2_mean": -5.616232083182357,
         "r2_std": 0.0,
-        "spearman_mean": -0.44014699880137775,
+        "spearman_mean": -0.4111689346313628,
         "spearman_std": 0.0,
         "is_self": false
       },
       "string_ppi": {
-        "r2_mean": -3.170470270120708,
-        "r2_std": 0.0,
-        "spearman_mean": 0.05599459538531291,
+        "r2_mean": -3.833772272190879,
+        "r2_std": 4.440892098500626e-16,
+        "spearman_mean": 0.02839359415452231,
         "spearman_std": 0.0,
         "is_self": false
       },
       "obgn_arxiv": {
-        "r2_mean": 0.7268082765454684,
+        "r2_mean": 0.7270558373574372,
         "r2_std": 0.0,
-        "spearman_mean": 0.8499973806305067,
+        "spearman_mean": 0.8502177154338586,
         "spearman_std": 0.0,
         "is_self": true
       }
     }
   },
   "summary": {
-    "mean_self_r2": 0.8723273414705751,
-    "mean_cross_r2": -1.3816355746556694,
-    "r2_transfer_drop": 2.2539629161262447,
-    "mean_self_spearman": 0.9309225194914716,
-    "mean_cross_spearman": 0.10205150353617679,
-    "spearman_transfer_drop": 0.8288710159552949,
+    "mean_self_r2": 0.8697425702607857,
+    "mean_cross_r2": -1.368623072148505,
+    "r2_transfer_drop": 2.238365642409291,
+    "mean_self_spearman": 0.929643923248425,
+    "mean_cross_spearman": 0.09729513697358881,
+    "spearman_transfer_drop": 0.8323487862748362,
     "n_negative_r2_transfers": 17,
     "n_cross_pairs": 20
   },

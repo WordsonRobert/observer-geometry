@@ -1,20 +1,11 @@
 """
 reconstruction_plus.py
 ======================
-Everything Table 1 is missing, computed in one pass over the cached features.
-
-Answers three reviewer objections at once:
-
-  1. "R^2 is about values; your claim is about rankings."
-     -> reports Spearman(Phi, Phi_hat) beside every R^2.
-
-  2. "Hyperbolic radius correlates -0.606 with Phi on Cora, better than any
-     classical descriptor, and it's not in your feature set."
-     -> reports reconstruction with and without radius as an 8th feature.
-
-  3. "A random 80/20 node split leaks: centralities are spatially smooth, so
-     test nodes neighbour training nodes."
-     -> reports a community-held-out split (Louvain) beside the random one.
+Reconstruction of Phi from the seven classical centralities (Table 3, Appendix A.2):
+  1. rank recovery (held-out Spearman between true and predicted Phi) beside every R^2;
+  2. hyperbolic radius as an eighth feature, and radius alone;
+  3. a Louvain community holdout beside the random 80/20 node split, since centralities are
+     spatially smooth and random splits leak.
 
 Emits per dataset:   <folder>/reconstruction_plus.json
 Emits pooled:        results/reconstruction_plus.json
@@ -163,7 +154,7 @@ def run_one(name, do_community=True):
         result["radius_spearman_vs_phi"] = float(spearmanr(y, r)[0])
         result["classical_plus_radius_random"] = random_split_eval(Xr, y)
         result["feature_names_with_radius"] = FEATURE_NAMES + ["HyperbolicRadius"]
-        # radius alone -- the number a reviewer will ask for
+        # radius alone
         result["radius_only_random"] = random_split_eval(r.reshape(-1, 1), y)
     except MissingArtifact as e:
         result["classical_plus_radius_random"] = {"error": str(e)}
@@ -217,6 +208,15 @@ def main():
         {"dataset": DISPLAY[k], **pr} for _, k, pr in rows
     ]
 
+    # merge with per-dataset results already on disk, so a partial run never drops datasets
+    for k in DATASETS:
+        if k not in pooled and (folder(k) / "reconstruction_plus.json").exists():
+            import json as _json
+            pooled[k] = _json.load(open(folder(k) / "reconstruction_plus.json"))
+    rows = [(v["paper_row"]["nonlinearity_gap"], k, v["paper_row"])
+            for k, v in pooled.items() if isinstance(v, dict) and "paper_row" in v]
+    rows.sort(reverse=True)
+    pooled["_gap_ordering"] = [{"dataset": DISPLAY[k], **pr} for _, k, pr in rows]
     write_json(pooled, RESULTS / "reconstruction_plus.json")
 
     print("\n--- nonlinearity gap ordering (the finding) ---")

@@ -5,25 +5,24 @@ namespace Instantiation
 
 noncomputable section
 
--- Part III: Sensitivity. What affects mu, and how.
+-- Sensitivity of `mu` (Proposition 2(a)-(c)).
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {X : Type*} [MetricSpace X] (f : V → X)
 
--- ITEM 19 (Influence Function). Every node contributes exactly
--- exp(-δ d(v,u)) to mu -- no interaction with other hidden nodes.
+-- Each hidden vertex contributes exactly `exp (-δ d(v,u))` to `mu`, with no interaction terms.
 omit [Fintype V] in
 theorem mu_influence (δ : ℝ) (v u : V) (H : Finset V) (hu : u ∉ H) :
     mu f δ (insert u H) v - mu f δ H v = Real.exp (-δ * dist (f v) (f u)) :=
   mu_stability_VII f δ v u H hu
 
--- ITEM 20 (Distance Sensitivity).
+-- The contribution of a hidden vertex is non-increasing in its distance.
 theorem influence_antitone (δ : ℝ) (hδ : 0 ≤ δ) {d1 d2 : ℝ} (h : d1 ≤ d2) :
     Real.exp (-δ * d2) ≤ Real.exp (-δ * d1) := by
   apply Real.exp_le_exp.mpr
   nlinarith
 
--- ITEM 21 (Cardinality Bounds).
+-- Cardinality bounds: `|H| exp (-δ d_max) ≤ mu ≤ |H| exp (-δ d_min)`.
 omit [Fintype V] [DecidableEq V] in
 theorem mu_cardinality_bounds (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
     (dmin dmax : ℝ) (hmin : ∀ u ∈ H, dmin ≤ dist (f v) (f u))
@@ -45,7 +44,7 @@ theorem mu_cardinality_bounds (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
           exact influence_antitone δ hδ (hmin u hu)
       _ = (H.card : ℝ) * Real.exp (-δ * dmin) := by rw [Finset.sum_const, nsmul_eq_mul]
 
--- ITEM 22 (Asymptotics).
+-- Limits in δ.
 
 open Filter Topology
 

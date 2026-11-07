@@ -1,46 +1,23 @@
-"""
-run_dose_response.py -- PATCHED (hyperbolic + re-embedding + reduced grid)
-==========================================================================
-Generates the data behind Figure 1.
+"""run_dose_response.py
+====================
+Hidden-geometry intervention benchmark (Figure 1, Appendix A.5). Five synthetic families,
+graphs embedded in the 10-dimensional Poincare ball by stress minimization; the observed
+region is the deterministic 2-hop ball B(v, 2), held fixed; four intervention axes (subtree
+growth, hidden branching, hidden edges, cycle density) at four doses.
 
-WHAT CHANGED AND WHY
---------------------
-1. HYPERBOLIC GEOMETRY. The old version used nx.spring_layout(dim=2) with
-   Euclidean distance, so Figure 1 contained no hyperbolic geometry at all
-   despite the paper being about a hyperbolic instantiation. Now: Poincare
-   ball, dim=10, same stress objective as the stability benchmark.
+Two protocols:
+  re-embedded (default)  warm-started refinement of the embedding (50 epochs) after every
+                         intervention, so connectivity changes can move coordinates;
+  --frozen               coordinates fixed after intervention; edge-only interventions then
+                         cannot change mu (an identity, reported as a control).
+Grid: 10 graphs/family x 8 observers/graph x 4 doses/axis x 10 realizations; every record
+carries a graph-instance id so aggregate.py can cluster intervals by instance.
 
-2. RE-EMBEDDING AFTER INTERVENTION. With frozen coordinates, edge-only
-   interventions cannot change mu -- so "Phi tracks extent, not connectivity"
-   was forced by the protocol rather than discovered. Warm-started refinement
-   (50 epochs from the base embedding) lets connectivity propagate into the
-   metric. Run with --frozen to reproduce the old behaviour for comparison;
-   reporting BOTH is the strongest version of this experiment.
-
-3. REDUCED GRID. 4.18M records bought false precision, not statistical power:
-   100 realizations share an observer, 20 observers share a graph AND its
-   embedding, 20 graphs share a family. Effective n for a family-level claim
-   was always ~20, not ~800k. New grid is ~64k configs and gives the same
-   information with honest error bars.
-
-        graphs/family  20 -> 10        observers/graph  20 -> 8
-        levels/axis   5-6 -> 4         realizations    100 -> 10
-
-4. GRAPH-INSTANCE IDs on every record, so aggregate.py can cluster standard
-   errors by instance instead of treating correlated records as independent.
-
-Runtime: ~40-90 min on 7 workers (dominated by APSP + centralities per
-realization, not by the embedding refinement). Measure first:
-    python synthetic/run_dose_response.py --pilot
-
-Emits: synthetic/results/raw_reembed/<family>/graph_<seed>.json
-Resumable: completed graph files are skipped.
-
+Emits: synthetic/results/raw_reembed/<family>/graph_<seed>.json (resumable)
 Usage:
     python synthetic/run_dose_response.py --pilot
     python synthetic/run_dose_response.py
     python synthetic/run_dose_response.py --frozen --out results/raw_frozen
-    python synthetic/run_dose_response.py --workers 7 --graphs-per-family 10
 """
 import json
 import multiprocessing as mp
@@ -269,7 +246,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     jobs = build_jobs(out_dir, reembed_epochs, gpf)
 
-    mode = "FROZEN (old protocol)" if reembed_epochs == 0 else \
+    mode = "FROZEN" if reembed_epochs == 0 else \
            f"RE-EMBEDDING ({reembed_epochs} warm epochs)"
     print(f"Mode:    {mode}")
     print(f"Output:  {out_dir}")

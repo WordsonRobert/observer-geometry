@@ -1,25 +1,11 @@
 """
 cross_dataset_transfer.py
 =========================
-The strongest distinctiveness experiment available, and it costs ~20 minutes.
-
-Within-dataset reconstruction R^2 answers "can classical descriptors predict
-Phi on THIS graph?" -- which is weak, because a flexible model can fit almost
-anything given enough features. The sharper question is:
-
-    Is Phi the SAME function of classical descriptors across graphs?
-
-If XGB trained on Cora transfers to Citeseer, then Phi is (approximately) a
-fixed nonlinear functional of classical centralities and the contribution is
-computational, not informational. If transfer collapses, then Phi is a
-DIFFERENT function on each graph -- i.e. it depends on geometry the classical
-set does not encode. That is a much stronger claim than any within-dataset
-number, and it is exactly the "there is no consistent signal" intuition made
-into a measurement.
-
-Features are z-scored per dataset before transfer, so scale differences
-between graphs (degree ranges, betweenness normalization) cannot by themselves
-explain a collapse.
+Is Phi the same function of the classical centralities across graphs? An XGBoost model
+fit on one dataset is evaluated on the others. Features are z-scored per dataset and Phi is
+rank-normalized, so scale differences between graphs cannot by themselves explain a drop.
+Compare off-diagonal entries with held-out within-dataset fits
+(analysis/transfer_heldout.py), not with the in-sample diagonal.
 
 Emits: results/cross_dataset_transfer.json
 

@@ -1,27 +1,11 @@
-"""
-phi_seed_variance.py
+"""phi_seed_variance.py
 ====================
-stage_phi writes std=zeros and seeds=[0], so every reported Phi currently has
-no measured variance. If any table shows a +/- for Phi it is zero by
-construction, which a reviewer will notice.
+Recomputes Phi under several independent simulator seeds at the same K* and reports, per
+dataset, pairwise Spearman agreement between seeds, mean and maximum per-node standard
+deviation, and the coefficient of variation. Writes sidecar files; phi_full_meanstd.pt is
+not modified. (The exact evaluator, analysis/exact_phi_all.py, removes Monte Carlo error.)
 
-This recomputes Phi under several independent simulator seeds at the SAME K*
-and reports, per dataset:
-
-    * pairwise Spearman between seeds (the number that matters -- Phi is used
-      as a ranking)
-    * mean and max per-node standard deviation
-    * the coefficient of variation
-
-Does NOT overwrite phi_full_meanstd.pt. Writes a sidecar so your existing
-pipeline is untouched.
-
-Runtime: N_SEEDS x the cost of one phi pass. Phi is the cheap stage (68s on
-ogbn-arxiv), so 3 seeds x 5 datasets is well under an hour on GPU.
-
-Emits: <folder>/phi_seed_variance.json
-       results/phi_seed_variance.json
-
+Emits: <folder>/phi_seed_variance.json, results/phi_seed_variance.json
 Usage:
     python analysis/phi_seed_variance.py --seeds 3
     python analysis/phi_seed_variance.py --datasets cora --seeds 5 --device cuda:0

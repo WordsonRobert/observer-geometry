@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/embedding_ablation/
+Run as: python embedding_ablation/run_ablation.py
 
 Produces Phi for:
   1. HVGAE (reused from cora/hvgae_embedding/, the main paper embedding)

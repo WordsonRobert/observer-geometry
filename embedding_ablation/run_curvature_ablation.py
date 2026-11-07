@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/embedding_ablation/ AFTER run_ablation.py.
+Run as: python embedding_ablation/run_curvature_ablation.py  (after run_ablation.py)
 
 Experiment 2: retrain HVGAE at each of 6 fixed curvatures (no model selection --
 this is different from curvature_search.py, which picks ONE best curvature for the

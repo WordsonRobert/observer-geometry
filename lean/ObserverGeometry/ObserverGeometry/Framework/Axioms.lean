@@ -2,27 +2,14 @@ import Mathlib.Tactic
 
 noncomputable section
 
--- Framework: Observer Geometry (Option B indexing).
---
--- G = (V, E) a finite graph, embedded via f : V -> X into a metric
--- space (X, d_X). A node v in V is called an observer.
---
--- Observation budgets are NOT the raw index n. Instead, `I : Nat ->
--- Real` is an arbitrary nondecreasing sequence of budget VALUES --
--- I n is the n-th budget in the sequence, and different indices n, m
--- may share the same budget value (I n = I m is allowed). The
--- observed region O depends only on the budget value, not on which
--- index produced it.
+-- Framework: observation processes, hidden regions, region functionals and the observer
+-- descriptor. A finite vertex set V carries an observation process; budgets are indexed by a
+-- monotone sequence of budget values `I : ℕ → ℝ`, so distinct indices may share a value.
 
 variable (V : Type*) [Fintype V] [DecidableEq V]
 
--- NOTE: an earlier draft of this structure included a `welldef`
--- field (O depends only on the budget VALUE I n, not on which index
--- n produced it). It was never used by any downstream proof in this
--- project -- every theorem here only ever needs `mono`, `init`, and
--- `eventual` -- so it has been dropped rather than kept as unused
--- machinery. The `I : Nat -> Real` budget-value sequence itself is
--- still genuinely used (I_mono drives H_comparable).
+-- An observation process (Definition 1): initialization, monotonicity in the budget value, and
+-- eventual exhaustion (the process is ideal, `O v t = univ` for large t).
 structure ObsProcess where
   I : ℕ → ℝ
   I_mono : Monotone I
@@ -53,18 +40,8 @@ theorem H_comparable (v : V) (n m : ℕ) :
 
 end ObsProcess
 
--- RGF (Remaining Geometry Functional).
---
--- IMPORTANT: J now takes an explicit BASEPOINT argument, J : V ->
--- Finset V -> Real. This is a deliberate correction: the previous
--- signature J : Finset V -> Real had no way to express that a
--- concrete remaining-mass functional (e.g. the exponential-weighted
--- mu of Instantiation/Mu.lean) genuinely depends on WHICH vertex is
--- doing the observing, not just on which set is hidden. Without this
--- basepoint slot, Phi (e v) silently reused the basepoint-independent
--- J at the WRONG basepoint whenever J was instantiated from a
--- basepoint-dependent concrete functional -- a real semantic bug,
--- not merely a missing generality.
+-- Region functional (Definition 3). `J v S` takes the observer `v` as an explicit basepoint,
+-- so that functionals measuring distance to the observer, such as `mu`, are instances.
 structure RGF (V : Type*) [Fintype V] [DecidableEq V] where
   J : V → Finset V → ℝ
   nonneg : ∀ v H, 0 ≤ J v H
@@ -98,11 +75,8 @@ theorem hidden_order_reflection
         have := hstrict v _ _ hstrict_sub
         linarith
 
--- THE OBSERVER DESCRIPTOR: Phi(v) = Σ_I P(I) * J(v, H_I(v)). Note the
--- SAME v is used both to pick the hidden set AND as J's basepoint --
--- this is precisely the fix. Previously, instantiating Phi with a
--- basepoint-fixed J meant Phi(e v) still measured distances from the
--- ORIGINAL basepoint even though the hidden set moved to e(v).
+-- Observer descriptor (Definition 4): `Phi v = Σ_t P(t) * J v (H v t)`. The same `v` selects
+-- the hidden region and serves as the basepoint of `J`.
 def Phi (v : V) : ℝ :=
   ∑ t ∈ P.support, P.weight t * Jf.J v (Obs.H v t)
 
@@ -197,10 +171,8 @@ theorem hidden_mono (v : V) (t1 t2 : ℕ) (h : Obs.H v t1 ⊆ Obs.H v t2) :
     Jf.J v (Obs.H v t1) ≤ Jf.J v (Obs.H v t2) :=
   Jf.mono v _ _ h
 
--- STABILITY IV (framework-level). The bound constant J(v, V) is now
--- correctly BASEPOINT-DEPENDENT, matching the actual behavior of the
--- concrete mu instantiation (its "J(V)" is genuinely observer-
--- dependent, as documented in the experimental panels).
+-- Budget perturbation (Theorem 1(b)): `|Phi_P v - Phi_Q v| ≤ J v univ * Σ_t |P t - Q t|`
+-- for budget distributions with a shared support.
 theorem Phi_stability_budget (P Q : BudgetDist) (hsupp : P.support = Q.support)
     (v : V) :
     |Jf.Phi Obs P v - Jf.Phi Obs Q v| ≤

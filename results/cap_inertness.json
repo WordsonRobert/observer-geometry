@@ -1,0 +1,30 @@
+{
+  "cora": {
+    "max_degree": 168,
+    "n_over_cap": 0
+  },
+  "citeseer": {
+    "max_degree": 99,
+    "n_over_cap": 0
+  },
+  "go_dag": {
+    "max_degree": 199,
+    "n_over_cap": 0
+  },
+  "string_ppi": {
+    "max_degree": 766,
+    "n_over_cap": 124,
+    "max_transition_prob_full": 0.011366749240334935,
+    "max_transition_prob_capped": 0.011540903235158552,
+    "max_transition_prob_capped_prev_removed": 0.011645675255258989,
+    "max_abs_diff_exact_cap_vs_nocap": 0.0
+  },
+  "obgn_arxiv": {
+    "max_degree": 13161,
+    "n_over_cap": 435,
+    "max_transition_prob_full": 0.011040738899921094,
+    "max_transition_prob_capped": 0.011090344002178221,
+    "max_transition_prob_capped_prev_removed": 0.011202996390377846,
+    "max_abs_diff_exact_cap_vs_nocap": 0.0
+  }
+}

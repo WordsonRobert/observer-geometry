@@ -1,7 +1,9 @@
 import ObserverGeometry.Framework.Axioms
 import ObserverGeometry.Framework.MetricLocality
 import ObserverGeometry.Instantiation.Canonicality
+import ObserverGeometry.Instantiation.Coverage
 import ObserverGeometry.Instantiation.Mu
+import ObserverGeometry.Instantiation.NormalizedStability
 import ObserverGeometry.Instantiation.Sensitivity
 import ObserverGeometry.Instantiation.Stability
 import ObserverGeometry.RegularTree.BridgeTheorem

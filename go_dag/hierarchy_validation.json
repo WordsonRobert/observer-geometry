@@ -1,17 +1,17 @@
 {
   "descendant_correlation": {
-    "rho": 0.3240612421717518,
+    "rho": 0.29504073674586206,
     "p": 0.0
   },
   "partial_correlation_depth_controlled": {
-    "rho": 0.29319212449968773,
+    "rho": 0.2748879376321097,
     "p": 0.0
   },
-  "leaf_baseline": 0.5841307509760392,
-  "leaf_top_phi": 0.3885911179173048,
-  "leaf_top_degree": 0.006891271056661562,
-  "leaf_top_pagerank": 0.0015313935681470138,
-  "parent_child_delta_mean": -0.0004789620579686016,
-  "parent_child_delta_std": 0.001440935069695115,
-  "fraction_child_greater": 0.373
+  "leaf_baseline": 0.549711964855568,
+  "leaf_top_phi": 0.40630182421227196,
+  "leaf_top_degree": 0.005804311774461028,
+  "leaf_top_pagerank": 0.001658374792703151,
+  "parent_child_delta_mean": -0.00035750234383158386,
+  "parent_child_delta_std": 0.0014111611526459455,
+  "fraction_child_greater": 0.4
 }

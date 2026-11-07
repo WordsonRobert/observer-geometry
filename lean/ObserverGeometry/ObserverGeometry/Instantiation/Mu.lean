@@ -6,12 +6,8 @@ namespace Instantiation
 
 noncomputable section
 
--- Concrete Instantiation: mu, the exponential-weighted remaining
--- geometry functional. Notation: mu delta H v = mu_H(v) -- for a
--- FIXED hidden region H, mu_H is a function of the observer v (the
--- basepoint distances are measured from). This ordering makes
--- "observer moves" (Stability V) naturally about varying the LAST
--- argument with H held fixed.
+-- The exponential region functional `mu δ H v = Σ_{u ∈ H} exp (-δ d(f v, f u))` (Eq. 2). For a
+-- fixed hidden region H, `mu δ H` is a function of the observer v.
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {X : Type*} [MetricSpace X] (f : V → X)
@@ -32,9 +28,7 @@ omit [Fintype V] [DecidableEq V] in
 theorem mu_exhaustion (δ : ℝ) (v : V) : mu f δ ∅ v = 0 := by
   unfold mu; simp
 
--- The RGF instance. J now genuinely threads the basepoint through
--- (matching the corrected RGF signature), rather than being fixed to
--- one basepoint per instance.
+-- `mu` as a region functional (`RGF` instance).
 def muRGF (δ : ℝ) : RGF V where
   J := fun v H => mu f δ H v
   nonneg := fun v H => mu_nonneg f δ H v
@@ -91,13 +85,8 @@ theorem mu_inclusion_exclusion (δ : ℝ) (v : V) (A B : Finset V) :
   rw [hU, hA]
   ring
 
--- THE PREVIOUSLY-VACUOUS GAP, CLOSED: mu genuinely satisfies the
--- basepoint-relative Locality axiom. This was flagged as an open
--- issue: Locality's older (basepoint-blind) form was FALSE for mu,
--- and no instance ever discharged it. The corrected, basepoint-
--- relative Locality is exactly the content of "mu depends only on
--- distance to the observer" -- provable directly by reindexing the
--- defining sum along the bijection e.
+-- `mu` satisfies the basepoint-relative locality axiom: reindex the defining sum along the
+-- distance-preserving bijection.
 theorem mu_locality (δ : ℝ) : Locality f (muRGF f δ) := by
   intro v1 v2 H1 H2 e hpres
   change mu f δ H1 v1 = mu f δ H2 v2

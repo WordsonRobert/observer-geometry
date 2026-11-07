@@ -1,58 +1,58 @@
 {
   "Degree": {
-    "spearman_rho": 0.4249372456559671,
+    "spearman_rho": 0.3894997430656907,
     "spearman_p": 0.0,
-    "kendall_tau": 0.3098011261043225,
+    "kendall_tau": 0.2796655141136124,
     "kendall_p": 0.0,
-    "pearson_rho": 0.1448818313093382,
-    "pearson_p": 1.5444633878384067e-122
+    "pearson_rho": 0.12876461600800818,
+    "pearson_p": 1.0126352624002413e-89
   },
   "PageRank": {
-    "spearman_rho": 0.43478739178874487,
+    "spearman_rho": 0.41013809298793635,
     "spearman_p": 0.0,
-    "kendall_tau": 0.29640192949927663,
+    "kendall_tau": 0.27672279098802344,
     "kendall_p": 0.0,
-    "pearson_rho": 0.11984565271955454,
-    "pearson_p": 3.509159281482117e-84
+    "pearson_rho": 0.10586565043522733,
+    "pearson_p": 4.318233620827136e-61
   },
   "Betweenness": {
-    "spearman_rho": 0.46173639410995526,
+    "spearman_rho": 0.4384008303095344,
     "spearman_p": 0.0,
-    "kendall_tau": 0.32746457102259946,
+    "kendall_tau": 0.30784522440408835,
     "kendall_p": 0.0,
-    "pearson_rho": 0.041753400760196305,
-    "pearson_p": 1.4637640902153157e-11
+    "pearson_rho": 0.03514285106831663,
+    "pearson_p": 4.7526977035293496e-08
   },
   "Eigenvector": {
-    "spearman_rho": 0.18392723920193443,
-    "spearman_p": 1.593197969919529e-197,
-    "kendall_tau": 0.1257978099796493,
-    "kendall_p": 3.0148771384152437e-204,
-    "pearson_rho": 0.042304753969891216,
-    "pearson_p": 7.881780325967842e-12
+    "spearman_rho": 0.1897881294340065,
+    "spearman_p": 1.7340788173151608e-194,
+    "kendall_tau": 0.12999671351832204,
+    "kendall_p": 1.8086324571513667e-201,
+    "pearson_rho": 0.03299329250905428,
+    "pearson_p": 2.9573162802879313e-07
   },
   "Closeness": {
-    "spearman_rho": 0.2677986036985558,
+    "spearman_rho": 0.24564570308689462,
     "spearman_p": 0.0,
-    "kendall_tau": 0.18166279856756262,
+    "kendall_tau": 0.16564437613892236,
     "kendall_p": 0.0,
-    "pearson_rho": 0.09212161567575168,
-    "pearson_p": 2.4014793136889235e-50
+    "pearson_rho": 0.07682666606163534,
+    "pearson_p": 6.42055257749037e-33
   },
   "Katz": {
-    "spearman_rho": 0.440106322869005,
+    "spearman_rho": 0.3988511098334713,
     "spearman_p": 0.0,
-    "kendall_tau": 0.2784331885253641,
+    "kendall_tau": 0.25057585421227385,
     "kendall_p": 0.0,
-    "pearson_rho": 0.15132614793602936,
-    "pearson_p": 1.2545609839715196e-133
+    "pearson_rho": 0.1321671124749418,
+    "pearson_p": 1.8291043483630206e-94
   },
   "Harmonic": {
-    "spearman_rho": 0.29080497717536574,
+    "spearman_rho": 0.27008164314440386,
     "spearman_p": 0.0,
-    "kendall_tau": 0.19682578020123656,
+    "kendall_tau": 0.1818308356288314,
     "kendall_p": 0.0,
-    "pearson_rho": 0.11575774386761156,
-    "pearson_p": 1.2608874601372024e-78
+    "pearson_rho": 0.09910530814125487,
+    "pearson_p": 1.0013540745749593e-53
   }
 }

@@ -26,9 +26,8 @@ def split_edges(edge_index, num_nodes, val_frac=0.1, seed=0):
     """
     Simple random edge split for link-prediction validation.
     Returns train_edge_index, val_pos_edge_index, val_neg_edge_index.
-    NOTE: this is for embedding-quality validation only, not for the downstream
-    HBP/BFC experiments -- the full edge set should be used for those once the
-    embedding is chosen.
+    Used for curvature selection only; the selected model is re-encoded on the full
+    edge set for all downstream analyses.
     """
     g = torch.Generator().manual_seed(seed)
     num_edges = edge_index.size(1)

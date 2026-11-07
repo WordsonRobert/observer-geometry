@@ -80,7 +80,7 @@ class HGCNLiteEncoder(nn.Module):
     aggregation, then exp/log maps to move between manifold and tangent space at
     each layer. This is the same class of simplification as the HVGAE encoder
     (tangent-space ops + manifold maps, not full per-layer manifold-valued algebra)
-    -- flag this the same way if a reviewer asks about "true" HGCN comparison."""
+    -- not a full HGCN."""
     def __init__(self, in_dim, hidden_dim, out_dim, ball):
         super().__init__()
         self.ball = ball

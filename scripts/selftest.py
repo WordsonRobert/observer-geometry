@@ -2,7 +2,7 @@
 """
 selftest.py -- verifies the package is standalone.
 
-Checks, in order of how badly each would waste your time:
+Checks, in order:
 
   1. every expected file is present
   2. no script imports anything outside this folder
@@ -76,7 +76,7 @@ BAD = [
      'os.makedirs("results") -- resolves against cwd'),
 ]
 for py in sorted(REPO.rglob("*.py")):
-    if py.name.startswith("_patch_paths") or py.name == "selftest.py":
+    if py.name == "selftest.py":
         continue
     txt = py.read_text()
     for rx, msg in BAD:

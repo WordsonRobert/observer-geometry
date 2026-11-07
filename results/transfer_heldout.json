@@ -1,0 +1,28 @@
+{
+  "cora": {
+    "heldout_spearman": 0.7358733088191283,
+    "heldout_r2": 0.5313157689989355
+  },
+  "citeseer": {
+    "heldout_spearman": 0.7840322154238288,
+    "heldout_r2": 0.6333252396831154
+  },
+  "go_dag": {
+    "heldout_spearman": 0.7633180271988181,
+    "heldout_r2": 0.5985613943993713
+  },
+  "string_ppi": {
+    "heldout_spearman": 0.8530904740378844,
+    "heldout_r2": 0.7333696954991563
+  },
+  "obgn_arxiv": {
+    "heldout_spearman": 0.8089148903792429,
+    "heldout_r2": 0.6639307405035896
+  },
+  "summary": {
+    "mean_in_sample": 0.929643923248425,
+    "mean_heldout_within": 0.7890457831717805,
+    "mean_cross": 0.09729513697358881,
+    "best_cross": 0.5805025272823219
+  }
+}

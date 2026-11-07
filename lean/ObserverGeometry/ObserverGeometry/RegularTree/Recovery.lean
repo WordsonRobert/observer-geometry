@@ -60,12 +60,8 @@ theorem shellCoeffs_eq_of_shellSum_eq
   simp only [Polynomial.coeff_zero] at hcoeff
   linarith [hcoeff]
 
--- NOTE: Theorem 19 (Recovery) and Theorem 20 (Injectivity) are the
--- SAME theorem read two ways -- "the shell counts are recoverable
--- from the descriptor curve" and "different shell-count profiles
--- give different descriptor curves" are literally the same
--- statement, contrapositive-flipped. There is deliberately only one
--- proof (shellCoeffs_eq_of_shellSum_eq above), not two.
+-- Recovery and injectivity are one statement read in two directions: equal descriptor curves
+-- imply equal shell profiles. A single theorem is stated.
 
 end
 

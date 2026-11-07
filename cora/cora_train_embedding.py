@@ -1,5 +1,5 @@
 """
-Run from ~/projects/niggtract2/cora/  (or adjust the sys.path line below).
+Run as: python cora/cora_train_embedding.py
 
 Downloads Cora into ./data/ (cached, only downloads once), runs the 6-curvature
 HVGAE search, saves results + chosen embedding into ./hvgae_embedding/.

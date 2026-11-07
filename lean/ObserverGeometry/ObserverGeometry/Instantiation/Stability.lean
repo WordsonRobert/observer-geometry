@@ -9,7 +9,7 @@ noncomputable section
 variable {V : Type*} [Fintype V] [DecidableEq V]
 variable {X : Type*} [MetricSpace X] (f : V → X)
 
--- STABILITY I. H' = H ∪ A ==> mu(H') - mu(H) = mu(A \ H).
+-- Adding a set A to the hidden region changes `mu` by exactly `mu (A \ H)`.
 omit [Fintype V] in
 theorem mu_stability_I (δ : ℝ) (v : V) (H A : Finset V) :
     mu f δ (H ∪ A) v - mu f δ H v = mu f δ (A \ H) v := by
@@ -40,9 +40,8 @@ theorem mu_stability_I_bound (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H A : Finset V
     _ ≤ (A.card : ℝ) := by
         exact_mod_cast Finset.card_le_card (Finset.sdiff_subset)
 
--- STABILITY II. If two hidden regions differ by at most k elements
--- (counting both directions of the symmetric difference), mu differs
--- by at most k.
+-- Hidden-region perturbation (Theorem 1(c)): if two hidden regions differ in at most k vertices
+-- (counting both directions of the symmetric difference), `mu` differs by at most k.
 omit [Fintype V] in
 theorem mu_stability_II (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H H' : Finset V) (k : ℕ)
     (hk : (H \ H').card + (H' \ H).card ≤ k) :
@@ -89,8 +88,7 @@ theorem mu_stability_II (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H H' : Finset V) (k
   · rw [heqH, heqH']
     nlinarith [hbound1, hbound2, mu_nonneg f δ (H \ H') v, mu_nonneg f δ (H' \ H) v, hkR]
 
--- Helper lemma (Lipschitz bound on the exponential kernel; adapted
--- from the pattern already proven correct earlier in this project).
+-- Lipschitz bound on the exponential kernel: `|exp (-δ a) - exp (-δ b)| ≤ δ |a - b|` for a, b ≥ 0.
 theorem exp_dist_lipschitz (δ a b bound : ℝ) (hδ : 0 ≤ δ)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hbound : |a - b| ≤ bound) :
     |Real.exp (-δ * a) - Real.exp (-δ * b)| ≤ δ * bound := by
@@ -131,9 +129,8 @@ theorem exp_dist_lipschitz (δ a b bound : ℝ) (hδ : 0 ≤ δ)
     have hdiff : a - b ≤ bound := by rw [abs_le] at hab_le; linarith [hab_le.2]
     nlinarith [mul_le_mul_of_nonneg_left hdiff hδ]
 
--- STABILITY III. If every hidden-node distance changes by at most
--- epsilon between two embeddings f, g, mu changes by at most
--- delta * |H| * epsilon.
+-- Embedding perturbation (Theorem 1(d)): if every distance from v to the hidden region changes
+-- by at most ε between embeddings f and g, `mu` changes by at most δ |H| ε.
 omit [Fintype V] [DecidableEq V] in
 theorem mu_stability_III (δ ε : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
     (g : V → X) (hclose : ∀ u ∈ H, |dist (f v) (f u) - dist (g v) (g u)| ≤ ε) :
@@ -153,8 +150,8 @@ theorem mu_stability_III (δ ε : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
     _ = H.card * (δ * ε) := by rw [Finset.sum_const, nsmul_eq_mul]
     _ = δ * H.card * ε := by ring
 
--- STABILITY V. Observer moves from v to v': |mu_H(v) - mu_H(v')|
--- ≤ |H| * delta * d(v, v').
+-- Observer perturbation (Theorem 1(e)): for a fixed hidden region,
+-- `|mu_H(v) - mu_H(v')| ≤ |H| δ d(v, v')`.
 omit [Fintype V] [DecidableEq V] in
 theorem mu_stability_V (δ : ℝ) (hδ : 0 ≤ δ) (H : Finset V) (v v' : V) :
     |mu f δ H v - mu f δ H v'| ≤ H.card * δ * dist (f v) (f v') := by
@@ -180,12 +177,8 @@ theorem mu_stability_V (δ : ℝ) (hδ : 0 ≤ δ) (H : Finset V) (v v' : V) :
     _ = H.card * (δ * dist (f v) (f v')) := by rw [Finset.sum_const, nsmul_eq_mul]
     _ = H.card * δ * dist (f v) (f v') := by ring
 
--- STABILITY VI (Embedding Equivalence Stability). If two embeddings
--- induce IDENTICAL distances from v to every hidden node, mu is
--- exactly equal -- not merely close. This is strictly stronger than
--- coordinate invariance: it doesn't require a global isometry of the
--- ambient space, only that the specific distances used by mu happen
--- to coincide. Direct corollary of Stability III with epsilon = 0.
+-- If two embeddings induce identical distances from v to every hidden vertex, `mu` is equal
+-- under both; no global isometry of the ambient space is required.
 omit [Fintype V] [DecidableEq V] in
 theorem mu_stability_VI (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
     (g : V → X) (heq : ∀ u ∈ H, dist (f v) (f u) = dist (g v) (g u)) :
@@ -194,7 +187,7 @@ theorem mu_stability_VI (δ : ℝ) (hδ : 0 ≤ δ) (v : V) (H : Finset V)
   simp only [mul_zero, abs_le] at h
   linarith [h.1, h.2]
 
--- STABILITY VII. Only one hidden node changes: |Δmu| = exp(-δ d).
+-- Adding a single hidden vertex u changes `mu` by exactly `exp (-δ d(v,u))`.
 omit [Fintype V] in
 theorem mu_stability_VII (δ : ℝ) (v u : V) (H : Finset V) (hu : u ∉ H) :
     mu f δ (insert u H) v - mu f δ H v = Real.exp (-δ * dist (f v) (f u)) := by

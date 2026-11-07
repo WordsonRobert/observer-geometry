@@ -134,3 +134,33 @@ def cli_datasets(argv):
         if a == "--datasets" and i + 1 < len(argv):
             return [s.strip() for s in argv[i + 1].split(",") if s.strip()]
     return list(DATASETS)
+
+
+# ---------------------------------------------------------------------------
+# Exact descriptor artifacts (analysis/exact_phi_all.py). Stored per dataset in
+# <dataset>/exact/ (large, git-ignored); summaries go to results/.
+# ---------------------------------------------------------------------------
+CAPS = {"cora": None, "citeseer": None, "go_dag": 256, "string_ppi": 256, "obgn_arxiv": 256}
+
+
+def exact_tag(name, eps=1 / 50, delta=1.0, cap="config"):
+    if cap == "config":
+        cap = CAPS[name]
+    return f"eps{eps:.4g}_d{delta:g}_cap{cap}"
+
+
+def exact_path(name, eps=1 / 50, delta=1.0, cap="config"):
+    d = folder(name) / "exact"
+    d.mkdir(exist_ok=True)
+    return d / f"exact_{exact_tag(name, eps, delta, cap)}.npz"
+
+
+def load_exact(name, eps=1 / 50, delta=1.0, cap="config"):
+    p = _require(exact_path(name, eps, delta, cap),
+                 f"run: python analysis/exact_phi_all.py --datasets {name} "
+                 f"--eps {eps} --delta {delta}")
+    return np.load(p)
+
+
+def kstar(name):
+    return int(load_phi(name)[1])

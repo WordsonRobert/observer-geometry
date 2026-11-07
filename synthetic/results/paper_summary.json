@@ -1,6 +1,6 @@
 {
   "n_total_records": 127680,
-  "raw_dir": "/home/wordson22/projects/niggtract2/observer-geometry-standalone/observer-geometry/synthetic/results/raw_reembed",
+  "raw_dir": "synthetic/results/raw_reembed",
   "per_family": {
     "balanced_tree": {
       "hidden_edges": {
